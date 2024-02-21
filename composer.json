@@ -1,11 +1,11 @@
 {
-    "name": "webdevartisan/laravel-blocker",
+    "name": "webdevartisan/laravel-shield",
     "description": "Block bad bots and users that visit certain (exploit) urls for a set amount of time.",
     "keywords": [
         "webdevartisan",
-        "laravel-blocker"
+        "laravel-shield"
     ],
-    "homepage": "https://github.com/webdevartisan/laravel-blocker",
+    "homepage": "https://github.com/webdevartisan/laravel-shield",
     "license": "MIT",
     "type": "library",
     "authors": [
