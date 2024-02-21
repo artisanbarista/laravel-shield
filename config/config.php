@@ -78,11 +78,11 @@ return [
     |--------------------------------------------------------------------------
     |
     | The implementation you use to store blocked IPs with. Implementations you can choose from:
-    | - \Accentinteractive\LaravelBlocker\Services\BlockedIpStoreDatabase
-    | - \Accentinteractive\LaravelBlocker\Services\BlockedIpStoreCache
+    | - \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreDatabase
+    | - \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache
     |
     | Can be set by AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS in.env file
     |
     */
-    'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Accentinteractive\LaravelBlocker\Services\BlockedIpStoreCache'),
+    'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache'),
 ];

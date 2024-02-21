@@ -1,6 +1,6 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Models;
+namespace Webdevartisan\LaravelBlocker\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +26,6 @@ class BlockedIp extends Model
 
     protected static function newFactory()
     {
-        return \Accentinteractive\LaravelBlocker\Database\Factories\BlockedIpFactory::new();
+        return \Webdevartisan\LaravelBlocker\Database\Factories\BlockedIpFactory::new();
     }
 }

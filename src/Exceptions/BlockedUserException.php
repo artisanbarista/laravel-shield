@@ -1,6 +1,6 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Exceptions;
+namespace Webdevartisan\LaravelBlocker\Exceptions;
 
 class BlockedUserException extends \Exception
 {

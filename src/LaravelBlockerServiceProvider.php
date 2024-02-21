@@ -1,8 +1,8 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker;
+namespace Webdevartisan\LaravelBlocker;
 
-use Accentinteractive\LaravelBlocker\Services\BlockedIpStoreDatabase;
+use Webdevartisan\LaravelBlocker\Services\BlockedIpStoreDatabase;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelBlockerServiceProvider extends ServiceProvider

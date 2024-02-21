@@ -1,6 +1,6 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Services;
+namespace Webdevartisan\LaravelBlocker\Services;
 
 interface BlockedIpStoreInterface
 {

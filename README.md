@@ -1,9 +1,5 @@
 # Block bad bots and IPs that visit exploit URLs
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/accentinteractive/laravel-blocker.svg?style=flat-square)](https://packagist.org/packages/accentinteractive/laravel-blocker)
-[![Total Downloads](https://img.shields.io/packagist/dt/accentinteractive/laravel-blocker.svg?style=flat-square)](https://packagist.org/packages/accentinteractive/laravel-blocker)
-![GitHub Actions](https://github.com/accentinteractive/laravel-blocker/actions/workflows/main.yml/badge.svg)
-
 Your application is hammered by malicious bots and visitors that try out exploit URLs. This package detects those and blocks their IP addresses. Blocked users are denied access to your application until their block expires.
 
 1. Block exploit URLs like `/wp-admin` and `?invokefunction&function=call_user_func_array&vars[0]=phpinfo`.
@@ -15,17 +11,17 @@ Your application is hammered by malicious bots and visitors that try out exploit
 Step 1: Install the package via composer:
 
 ```bash
-composer require accentinteractive/laravel-blocker
+composer require webdevartisan/laravel-blocker
 ```
 
-Step 2: Make sure to register the Middleware. 
+Step 2: Make sure to register the Middleware.
 
 To use it on all requests, add it as the first option to the `web` section under `$middlewareGroups` in file app/Http/Kernel.php.
 
 ```php
 protected $middlewareGroups = [
     'web' => [
-        \Accentinteractive\LaravelBlocker\Http\Middleware\BlockMaliciousUsers::class,
+        \Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers::class,
     ],
 ];
 ```
@@ -34,17 +30,15 @@ To use it on specific requests, add it to any group or to the `protected $middle
 
 ```php
 protected $middleware = [
-        \Accentinteractive\LaravelBlocker\Http\Middleware\BlockMaliciousUsers::class,
+        \Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers::class,
     ];
 ```
 
 Step 3: Optionally publish the config file with:
 
 ```
-php artisan vendor:publish --provider="Accentinteractive\LaravelBlocker\LaravelBlockerServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Webdevartisan\LaravelBlocker\LaravelBlockerServiceProvider" --tag="config"
 ```
-
-Step 4: there is no step 4 :)
 
 ## Usage
 
@@ -75,7 +69,7 @@ Define malicious URLs in the published config file, or by setting this value in 
 
 Example: setting `wp-admin` will block both '/wp-admin', '/index.php/wp-admin/foo' and '/?p=wp-admin'.
 
-Defaults: `call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor` 
+Defaults: `call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor`
 
 ```apacheconf
 AI_BLOCKER_MALICIOUS_URLS='call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor'
@@ -93,15 +87,15 @@ AI_BLOCKER_MALICIOUS_USER_AGENTS='dotbot|linguee|seznam|mail.ru'
 
 ### Define storage class implementation
 
-By default, blocked IPs are stored in cache, using storage implementation `\Accentinteractive\LaravelBlocker\Services\BlockedIpStoreCache::class`.
+By default, blocked IPs are stored in cache, using storage implementation `\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache::class`.
 
 You can set the storage class you wish to use in the published config file, or by setting this value in .env. You can choose from:
-- \Accentinteractive\LaravelBlocker\Services\BlockedIpStoreCache
-- \Accentinteractive\LaravelBlocker\Services\BlockedIpStoreDatabase
+- \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache
+- \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreDatabase
 
 
 ```apacheconf
-AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS='\Accentinteractive\LaravelBlocker\Services\BlockedIpStoreCache'
+AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS='\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache'
 ```
 
 ### Testing
@@ -115,18 +109,14 @@ XDEBUG_MODE=coverage vendor/bin/phpunit tests --coverage-html code-coverage
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
 ### Security
 
-If you discover any security related issues, please email joost@accentinteractive.nl instead of using the issue tracker.
+If you discover any security related issues, please email webdevartisan@mail.ru instead of using the issue tracker.
 
 ## Credits
 
+-   [WebDevArtisan](https://github.com/webdevartisan)
 -   [Joost van Veen](https://github.com/accentinteractive)
--   [All Contributors](../../contributors)
 
 ## License
 
