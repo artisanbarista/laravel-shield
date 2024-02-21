@@ -1,12 +1,12 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Http\Middleware;
+namespace Webdevartisan\LaravelBlocker\Http\Middleware;
 
-use Accentinteractive\LaravelBlocker\Exceptions\BlockedUserException;
-use Accentinteractive\LaravelBlocker\Exceptions\MaliciousUrlException;
-use Accentinteractive\LaravelBlocker\Exceptions\MaliciousUserAgentException;
-use Accentinteractive\LaravelBlocker\Facades\BlockedIpStore;
-use Accentinteractive\LaravelBlocker\Facades\LaravelBlocker;
+use Webdevartisan\LaravelBlocker\Exceptions\BlockedUserException;
+use Webdevartisan\LaravelBlocker\Exceptions\MaliciousUrlException;
+use Webdevartisan\LaravelBlocker\Exceptions\MaliciousUserAgentException;
+use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
+use Webdevartisan\LaravelBlocker\Facades\LaravelBlocker;
 use Closure;
 
 class BlockMaliciousUsers
@@ -54,6 +54,8 @@ class BlockMaliciousUsers
 
             throw new MaliciousUserAgentException(__('Not accepted'), 406);
         }
+
+        // TODO: Another check if is malicious sql.
 
         return $next($request);
     }

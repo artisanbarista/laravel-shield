@@ -1,8 +1,8 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Tests;
+namespace Webdevartisan\LaravelBlocker\Tests;
 
-use Accentinteractive\LaravelBlocker\LaravelBlockerServiceProvider;
+use Webdevartisan\LaravelBlocker\LaravelBlockerServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

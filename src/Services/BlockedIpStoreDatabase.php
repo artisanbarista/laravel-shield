@@ -1,8 +1,8 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Services;
+namespace Webdevartisan\LaravelBlocker\Services;
 
-use Accentinteractive\LaravelBlocker\Models\BlockedIp;
+use Webdevartisan\LaravelBlocker\Models\BlockedIp;
 
 class BlockedIpStoreDatabase implements BlockedIpStoreInterface
 {

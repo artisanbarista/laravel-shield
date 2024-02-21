@@ -1,8 +1,8 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Database\Factories;
+namespace Webdevartisan\LaravelBlocker\Database\Factories;
 
-use Accentinteractive\LaravelBlocker\Models\BlockedIp;
+use Webdevartisan\LaravelBlocker\Models\BlockedIp;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BlockedIpFactory extends Factory

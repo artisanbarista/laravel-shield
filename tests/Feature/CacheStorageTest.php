@@ -1,10 +1,10 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Tests\Feature;
+namespace Webdevartisan\LaravelBlocker\Tests\Feature;
 
-use Accentinteractive\LaravelBlocker\Facades\BlockedIpStore;
-use Accentinteractive\LaravelBlocker\Services\BlockedIpStoreCache;
-use Accentinteractive\LaravelBlocker\Tests\TestCase;
+use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
+use Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache;
+use Webdevartisan\LaravelBlocker\Tests\TestCase;
 
 /**
  * Class LogCleanerTest

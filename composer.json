@@ -1,18 +1,23 @@
 {
-    "name": "accentinteractive/laravel-blocker",
+    "name": "webdevartisan/laravel-blocker",
     "description": "Block bad bots and users that visit certain (exploit) urls for a set amount of time.",
     "keywords": [
-        "accentinteractive",
+        "webdevartisan",
         "laravel-blocker"
     ],
-    "homepage": "https://github.com/accentinteractive/laravel-blocker",
+    "homepage": "https://github.com/webdevartisan/laravel-blocker",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
+            "name": "WebDevArtisan",
+            "email": "webdevartisan@mail.ru",
+            "role": "Developer"
+        },
+        {
             "name": "Joost van Veen",
             "email": "joost@accentinteractive.nl",
-            "role": "Developer"
+            "role": "Original Developer"
         }
     ],
     "require": {
@@ -28,13 +33,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Accentinteractive\\LaravelBlocker\\": "src",
-            "Accentinteractive\\LaravelBlocker\\Database\\Factories\\": "database/factories"
+            "Webdevartisan\\LaravelBlocker\\": "src",
+            "Webdevartisan\\LaravelBlocker\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Accentinteractive\\LaravelBlocker\\Tests\\": "tests"
+            "Webdevartisan\\LaravelBlocker\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,11 +52,11 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Accentinteractive\\LaravelBlocker\\LaravelBlockerServiceProvider"
+                "Webdevartisan\\LaravelBlocker\\LaravelBlockerServiceProvider"
             ],
             "aliases": {
                 "LaravelBlocker": "LaravelBlocker",
-                "BlockedIpStore": "Accentinteractive\\LaravelBlocker\\Facades\\BlockedIpStore"
+                "BlockedIpStore": "Webdevartisan\\LaravelBlocker\\Facades\\BlockedIpStore"
             }
         }
     }

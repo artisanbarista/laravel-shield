@@ -1,12 +1,12 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Tests\Feature;
+namespace Webdevartisan\LaravelBlocker\Tests\Feature;
 
-use Accentinteractive\LaravelBlocker\Facades\BlockedIpStore;
-use Accentinteractive\LaravelBlocker\Models\BlockedIp;
-use Accentinteractive\LaravelBlocker\Services\BlockedIpStoreCache;
-use Accentinteractive\LaravelBlocker\Services\BlockedIpStoreDatabase;
-use Accentinteractive\LaravelBlocker\Tests\TestCase;
+use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
+use Webdevartisan\LaravelBlocker\Models\BlockedIp;
+use Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache;
+use Webdevartisan\LaravelBlocker\Services\BlockedIpStoreDatabase;
+use Webdevartisan\LaravelBlocker\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker\Tests\Feature;
+namespace Webdevartisan\LaravelBlocker\Tests\Feature;
 
-use Accentinteractive\LaravelBlocker\Exceptions\MaliciousUserAgentException;
-use Accentinteractive\LaravelBlocker\Facades\BlockedIpStore;
-use Accentinteractive\LaravelBlocker\Http\Middleware\BlockMaliciousUsers;
-use Accentinteractive\LaravelBlocker\Facades\LaravelBlocker;
-use Accentinteractive\LaravelBlocker\Tests\TestCase;
+use Webdevartisan\LaravelBlocker\Exceptions\MaliciousUserAgentException;
+use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
+use Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers;
+use Webdevartisan\LaravelBlocker\Facades\LaravelBlocker;
+use Webdevartisan\LaravelBlocker\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 

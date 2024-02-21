@@ -1,6 +1,6 @@
 <?php
 
-namespace Accentinteractive\LaravelBlocker;
+namespace Webdevartisan\LaravelBlocker;
 
 class LaravelBlocker
 {
@@ -22,7 +22,7 @@ class LaravelBlocker
 
         return true;
     }
-    
+
     public function getUserAgent () {
         return request()->header('user-agent');
     }
