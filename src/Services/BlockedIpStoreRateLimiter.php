@@ -23,7 +23,6 @@ class BlockedIpStoreRateLimiter implements BlockedIpStoreInterface
 
     public function has(string $ip): bool
     {
-        dump(RateLimiter::remaining($this->getRateLimiterKey($ip), $this->getMaxAttempts()));
         if (RateLimiter::remaining($this->getRateLimiterKey($ip), $this->getMaxAttempts())) {
             return false;
         }
