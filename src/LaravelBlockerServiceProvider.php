@@ -18,8 +18,8 @@ class LaravelBlockerServiceProvider extends ServiceProvider
          */
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-blocker');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-blocker');
+        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-shield');
+        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-shield');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
@@ -29,17 +29,17 @@ class LaravelBlockerServiceProvider extends ServiceProvider
 
             // Publishing the views.
             /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/laravel-blocker'),
+                __DIR__.'/../resources/views' => resource_path('views/vendor/laravel-shield'),
             ], 'views');*/
 
             // Publishing assets.
             /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/laravel-blocker'),
+                __DIR__.'/../resources/assets' => public_path('vendor/laravel-shield'),
             ], 'assets');*/
 
             // Publishing the translation files.
             /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/laravel-blocker'),
+                __DIR__.'/../resources/lang' => resource_path('lang/vendor/laravel-shield'),
             ], 'lang');*/
 
             // Registering package commands.

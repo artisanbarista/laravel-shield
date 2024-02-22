@@ -30,17 +30,17 @@ class UserAgentBlockerTest extends TestCase
     /** @test */
     public function itDeterminesMaliciousUserAgent()
     {
-        config(['laravel-blocker.malicious_user_agents' => 'symfony']);
+        config(['laravel-shield.malicious_user_agents' => 'symfony']);
         $this->assertSame(true, LaravelBlocker::isMaliciousUserAgent());
 
-        config(['laravel-blocker.malicious_user_agents' => 'GoogleBot|BingBot']);
+        config(['laravel-shield.malicious_user_agents' => 'GoogleBot|BingBot']);
         $this->assertSame(false, LaravelBlocker::isMaliciousUserAgent());
     }
 
     /** @test */
     public function middlewareStoresIpOnMaliciousUserAgent()
     {
-        config(['laravel-blocker.malicious_user_agents' => 'symfony']);
+        config(['laravel-shield.malicious_user_agents' => 'symfony']);
         $this->get(self::HOST);
         $request = new Request();
         request()->server->add(['REMOTE_ADDR' => self::IP_ADDRESS]);
@@ -56,9 +56,9 @@ class UserAgentBlockerTest extends TestCase
     public function MaliciousUserAgentlDetectionCanBeDisabled()
     {
         // Disable user_agent_detection_enabled
-        config(['laravel-blocker.user_agent_detection_enabled' => false]);
+        config(['laravel-shield.user_agent_detection_enabled' => false]);
         // Request a malicious User Agent
-        config(['laravel-blocker.malicious_user_agents' => 'symfony']);
+        config(['laravel-shield.malicious_user_agents' => 'symfony']);
         $this->get(self::HOST);
         $request = new Request();
 

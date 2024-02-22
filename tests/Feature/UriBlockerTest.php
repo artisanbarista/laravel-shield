@@ -25,20 +25,20 @@ class UriBlockerTest extends TestCase
     /** @test */
     public function itDeterminesAMaliciousUrlFromAString()
     {
-        config(['laravel-blocker.malicious_urls' => 'call_user_func_array']);
+        config(['laravel-shield.malicious_urls' => 'call_user_func_array']);
         $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/?invokefunction&function=call_user_func_array&vars[0]=phpinfo'));
     }
 
     /** @test */
     public function itEscapesRegexCharacters()
     {
-        config(['laravel-blocker.malicious_urls' => 'wp-admin']);
+        config(['laravel-shield.malicious_urls' => 'wp-admin']);
         $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/wp-admin/'));
 
-        config(['laravel-blocker.malicious_urls' => '?foo']);
+        config(['laravel-shield.malicious_urls' => '?foo']);
         $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/?foo=bar'));
 
-        config(['laravel-blocker.malicious_urls' => '.git']);
+        config(['laravel-shield.malicious_urls' => '.git']);
         $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/.git'));
     }
 
@@ -103,7 +103,7 @@ class UriBlockerTest extends TestCase
     public function MaliciousUrlDetectionCanBeDisabled()
     {
         // Disable url_detection_enabled
-        config(['laravel-blocker.url_detection_enabled' => false]);
+        config(['laravel-shield.url_detection_enabled' => false]);
         $this->mockMaliciousUrlInRequest();
 
         $request = new Request();
@@ -118,7 +118,7 @@ class UriBlockerTest extends TestCase
      */
     protected function mockMaliciousUrlInRequest(): void
     {
-        config(['laravel-blocker.malicious_urls' => 'wp-admin']);
+        config(['laravel-shield.malicious_urls' => 'wp-admin']);
         $this->get('https://test.domain.com/wp-admin');
         request()->server->add(['REMOTE_ADDR' => self::IP_ADDRESS]);
     }

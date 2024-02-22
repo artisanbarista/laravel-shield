@@ -24,8 +24,8 @@ class BlockMaliciousUsers
 
     public function __construct()
     {
-        $this->checkForMaliciousUrls = (bool) config('laravel-blocker.url_detection_enabled');
-        $this->checkForMaliciousUseragents = (bool) config('laravel-blocker.user_agent_detection_enabled');
+        $this->checkForMaliciousUrls = (bool) config('laravel-shield.url_detection_enabled');
+        $this->checkForMaliciousUseragents = (bool) config('laravel-shield.user_agent_detection_enabled');
     }
 
     public function handle($request, Closure $next)

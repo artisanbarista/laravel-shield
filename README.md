@@ -11,7 +11,7 @@ Your application is hammered by malicious bots and visitors that try out exploit
 Step 1: Install the package via composer:
 
 ```bash
-composer require webdevartisan/laravel-blocker
+composer require webdevartisan/laravel-shield
 ```
 
 Step 2: Make sure to register the Middleware.
