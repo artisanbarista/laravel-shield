@@ -38,6 +38,9 @@ return [
     */
     'expiration_time' => env('AI_BLOCKER_EXPIRATION_TIME', 3600),
 
+
+    'max_attempts' => env('AI_BLOCKER_MAX_ATTEMPTS', 5),
+
     /*
     |--------------------------------------------------------------------------
     | Malicious URLS
@@ -51,7 +54,7 @@ return [
     |   If you wish to list both '.git' and 'install.php' the list should be '.git|install.php'
     |
     | Can be set by AI_BLOCKER_MALICIOUS_URLS in.env file
-    |
+    | TODO: Read from array not from the ENV.
     */
     'malicious_urls' => env('AI_BLOCKER_MALICIOUS_URLS', 'call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor'),
 
@@ -69,6 +72,7 @@ return [
     |
     | Can be set by AI_BLOCKER_MALICIOUS_USER_AGENTS in.env file
     |
+    | TODO: Read from array not from the ENV.
     */
     'malicious_user_agents' => env('AI_BLOCKER_MALICIOUS_USER_AGENTS', 'dotbot|linguee'),
 
@@ -77,12 +81,10 @@ return [
     | Block IPs Store
     |--------------------------------------------------------------------------
     |
-    | The implementation you use to store blocked IPs with. Implementations you can choose from:
-    | - \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreDatabase
-    | - \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache
+    | The implementation you use to store blocked IPs with.
     |
     | Can be set by AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS in.env file
     |
     */
-    'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache'),
+    'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreRateLimiter'),
 ];
