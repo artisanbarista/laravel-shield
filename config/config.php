@@ -54,9 +54,11 @@ return [
     |   If you wish to list both '.git' and 'install.php' the list should be '.git|install.php'
     |
     | Can be set by AI_BLOCKER_MALICIOUS_URLS in.env file
-    | TODO: Read from array not from the ENV.
+    |
     */
-    'malicious_urls' => env('AI_BLOCKER_MALICIOUS_URLS', 'call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor'),
+    'malicious_urls' => [
+        'call_user_func_array', 'invokefunction', 'wp-admin', 'wp-login', '.git', '.env', 'install.php', '/vendor'
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -72,9 +74,10 @@ return [
     |
     | Can be set by AI_BLOCKER_MALICIOUS_USER_AGENTS in.env file
     |
-    | TODO: Read from array not from the ENV.
     */
-    'malicious_user_agents' => env('AI_BLOCKER_MALICIOUS_USER_AGENTS', 'dotbot|linguee'),
+    'malicious_user_agents' => [
+        'dotbot', 'linguee'
+    ],
 
     /*
     |--------------------------------------------------------------------------
