@@ -12,7 +12,7 @@ class LaravelBlocker
 
     public function isMaliciousUri(string $uri): bool
     {
-        $search = preg_quote(config('laravel-shield.malicious_urls'), '/');
+        $search = preg_quote(implode('|', config('laravel-shield.malicious_urls')), '/');
         $search = str_replace('\|', '|', $search);
         preg_match('/(' . $search . ')/i', $uri, $matches);
 
@@ -28,7 +28,7 @@ class LaravelBlocker
     }
 
     public function isMaliciousUserAgent () {
-        $search = preg_quote(config('laravel-shield.malicious_user_agents'), '/');
+        $search = preg_quote(implode('|', config('laravel-shield.malicious_user_agents')), '/');
         $search = str_replace('\|', '|', $search);
         preg_match('/(' . $search . ')/i', $this->getUserAgent(), $matches);
 
