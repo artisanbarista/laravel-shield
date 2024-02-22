@@ -2,9 +2,6 @@
 
 namespace Webdevartisan\LaravelBlocker\Http\Middleware;
 
-use Webdevartisan\LaravelBlocker\Exceptions\BlockedUserException;
-use Webdevartisan\LaravelBlocker\Exceptions\MaliciousUrlException;
-use Webdevartisan\LaravelBlocker\Exceptions\MaliciousUserAgentException;
 use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
 use Webdevartisan\LaravelBlocker\Facades\LaravelBlocker;
 use Closure;
@@ -13,8 +10,8 @@ class BlockMaliciousUsers
 {
     public function handle($request, Closure $next)
     {
-        // protection_enabled
         $protectionEnabled = config('laravel-shield.protection_enabled');
+
         if (!$protectionEnabled) {
             return $next($request);
         }
