@@ -25,7 +25,7 @@ class BlockMaliciousUsers
 
         // Does this URL contain a malicious string?
         // @see config/config.php
-        if (LaravelBlocker::isMailicousRequest()) {
+        if (LaravelBlocker::isMaliciousRequest()) {
             // Store blocked IP
             BlockedIpStore::create($requestIp);
 

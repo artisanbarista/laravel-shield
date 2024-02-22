@@ -5,7 +5,7 @@ namespace Webdevartisan\LaravelBlocker;
 class LaravelBlocker
 {
 
-    public function isMailicousRequest(): bool
+    public function isMaliciousRequest(): bool
     {
         return $this->isMaliciousUri(request()->fullUrl());
     }
