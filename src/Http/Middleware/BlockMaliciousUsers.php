@@ -34,7 +34,7 @@ class BlockMaliciousUsers
 
         // Is this a blocked IP?
         if ($this->checkUrlsOrAgents() && BlockedIpStore::has($requestIp)) {
-            throw new BlockedUserException(__('You have been blocked'), 401);
+            return response('You have been blocked', 401);
         }
 
         // Does this URL contain a malicious string?
@@ -43,7 +43,7 @@ class BlockMaliciousUsers
             // Store blocked IP
             BlockedIpStore::create($requestIp);
 
-            throw new MaliciousUrlException(__('Not accepted'), 406);
+            return response('Not accepted', 406);
         }
 
         // Does the request come from a malicious User Agent?
@@ -52,7 +52,7 @@ class BlockMaliciousUsers
             // Store blocked IP
             BlockedIpStore::create($requestIp);
 
-            throw new MaliciousUserAgentException(__('Not accepted'), 406);
+            return response('Not accepted', 406);
         }
 
         // TODO: Another check if is malicious sql.
