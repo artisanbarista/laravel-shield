@@ -26,8 +26,6 @@ return [
     |
     */
     'expiration_time' => env('AI_BLOCKER_EXPIRATION_TIME', 3600),
-
-
     'max_attempts' => env('AI_BLOCKER_MAX_ATTEMPTS', 5),
 
     /*
