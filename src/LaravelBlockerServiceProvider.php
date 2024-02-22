@@ -24,7 +24,7 @@ class LaravelBlockerServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('laravel-blocker.php'),
+                __DIR__ . '/../config/config.php' => config_path('laravel-shield.php'),
             ], 'config');
 
             // Publishing the views.
@@ -53,15 +53,15 @@ class LaravelBlockerServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-blocker');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-shield');
 
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-blocker', function () {
+        $this->app->singleton('laravel-shield', function () {
             return new LaravelBlocker();
         });
 
 
-        $blockedIpStoreClass = config('laravel-blocker.storage_implementation_class');
+        $blockedIpStoreClass = config('laravel-shield.storage_implementation_class');
         $this->app->singleton('blockedipstore', function () use ($blockedIpStoreClass) {
             return new $blockedIpStoreClass();
         });
