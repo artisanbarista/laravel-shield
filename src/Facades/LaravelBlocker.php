@@ -17,6 +17,6 @@ class LaravelBlocker extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-blocker';
+        return 'laravel-shield';
     }
 }
