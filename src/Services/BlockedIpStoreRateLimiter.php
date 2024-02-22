@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\RateLimiter;
 class BlockedIpStoreRateLimiter implements BlockedIpStoreInterface
 {
 
-    public function create(string $ip, $expirationTimeInSeconds = null ): BlockedIpStoreInterface
+    public function create(string $ip, int $decaySeconds = null ): BlockedIpStoreInterface
     {
-        RateLimiter::hit($this->getRateLimiterKey($ip));
+        RateLimiter::hit($this->getRateLimiterKey($ip), $this->getExpirationTime($decaySeconds));
 
         return $this;
     }
@@ -23,6 +23,7 @@ class BlockedIpStoreRateLimiter implements BlockedIpStoreInterface
 
     public function has(string $ip): bool
     {
+        dump(RateLimiter::remaining($this->getRateLimiterKey($ip), $this->getMaxAttempts()));
         if (RateLimiter::remaining($this->getRateLimiterKey($ip), $this->getMaxAttempts())) {
             return false;
         }
@@ -38,5 +39,10 @@ class BlockedIpStoreRateLimiter implements BlockedIpStoreInterface
     protected function getRateLimiterKey($ip): string
     {
         return 'blocked:' . $ip;
+    }
+
+    protected function getExpirationTime(?int $decaySeconds): int
+    {
+        return $decaySeconds ?: config('laravel-shield.expiration_time');
     }
 }
