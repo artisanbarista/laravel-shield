@@ -38,4 +38,52 @@ class LaravelBlocker
 
         return true;
     }
+
+    public function isMaliciousPattern(): bool
+    {
+        return !empty($this->check(config('laravel-shield.malicious_patterns')));
+    }
+
+    public function check($patterns)
+    {
+        foreach ($patterns as $pattern) {
+            if ($this->match($pattern, request()->input())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function match($pattern, $input)
+    {
+        $result = false;
+
+        if (! is_array($input) && !is_string($input)) {
+            return false;
+        }
+
+        if (! is_array($input)) {
+            return preg_match($pattern, $input);
+        }
+
+        foreach ($input as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                if (!$result = $this->match($pattern, $value)) {
+                    continue;
+                }
+                break;
+            }
+
+            if ($result = preg_match($pattern, $value)) {
+                break;
+            }
+
+            break;
+        }
+        return $result;
+    }
 }

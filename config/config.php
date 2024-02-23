@@ -45,15 +45,16 @@ return [
     */
     'malicious_urls' => [
         'call_user_func_array', 'invokefunction', 'wp-admin', 'wp-login', '.git', '.env', 'install.php', '/vendor',
-        'bzip2://', 'expect://', 'glob://', 'phar://', 'php://', 'ogg://', 'rar://', 'ssh2://', 'zip://', 'zlib://', // php
     ],
 
     'malicious_patterns' => [
         '#\.\/#is', // lfi
         '#(http|ftp){1,1}(s){0,1}://.*#i', // rfi
-        '@[\|:]O:\d{1,}:"[\w_][\w\d_]{0,}":\d{1,}:{@i', '@[\|:]a:\d{1,}:{@i', // session
+        '@[\|:]O:\d{1,}:"[\w_][\w\d_]{0,}":\d{1,}:{@i', // session
+        '@[\|:]a:\d{1,}:{@i', // session
         '#[\d\W](union select|union join|union distinct)[\d\W]#is', // sqli
         '#[\d\W](union|union select|insert|from|where|concat|into|cast|truncate|select|delete|having)[\d\W]#is', // sqli
+        //'bzip2://', 'expect://', 'glob://', 'phar://', 'php://', 'ogg://', 'rar://', 'ssh2://', 'zip://', 'zlib://', // php
     ],
 
     /*
