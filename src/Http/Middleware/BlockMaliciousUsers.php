@@ -23,25 +23,13 @@ class BlockMaliciousUsers
             return response('You have been blocked', 401);
         }
 
-        // Does this URL contain a malicious string?
         // @see config/config.php
-        if (LaravelBlocker::isMaliciousRequest()) {
+        if (LaravelBlocker::isMaliciousRequest() || LaravelBlocker::isMaliciousUserAgent() || LaravelBlocker::isMaliciousPattern()) {
             // Store blocked IP
             BlockedIpStore::create($requestIp);
 
             return response('Not accepted', 406);
         }
-
-        // Does the request come from a malicious User Agent?
-        // @see config/config.php
-        if (LaravelBlocker::isMaliciousUserAgent()) {
-            // Store blocked IP
-            BlockedIpStore::create($requestIp);
-
-            return response('Not accepted', 406);
-        }
-
-        // TODO: Another check if is malicious sql.
 
         return $next($request);
     }
