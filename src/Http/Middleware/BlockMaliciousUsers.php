@@ -16,7 +16,11 @@ class BlockMaliciousUsers
             return $next($request);
         }
 
-        $requestIp = request()->ip();
+        $requestIp = $request->server('HTTP_CF_CONNECTING_IP') ?? $request->ip();
+
+        if (in_array($requestIp, config('laravel-shield.ip_whitelist'), true)) {
+            return $next($request);
+        }
 
         // Is this a blocked IP?
         if (BlockedIpStore::has($requestIp)) {
