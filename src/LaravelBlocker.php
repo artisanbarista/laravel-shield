@@ -8,31 +8,31 @@ class LaravelBlocker
     public function isMaliciousRequest(): bool
     {
         return match (true) {
-            $this->isMaliciousUri(),
-            $this->isMaliciousUserAgent() => true,
-            $this->isMaliciousPattern() => true,
+            $this->isMaliciousUri(request()->fullUrl()),
+            $this->isMaliciousUserAgent(request()->header('user-agent')),
+            $this->isMaliciousPattern(request()->input()) => true,
             default => false,
         };
     }
 
-    public function isMaliciousUri(): bool
+    public function isMaliciousUri($url): bool
     {
-        return $this->checkMaliciousTerms(config('laravel-shield.malicious_urls'), request()->fullUrl());
+        return $this->checkMaliciousTerms(config('laravel-shield.malicious_urls'), $url);
     }
 
-    public function isMaliciousUserAgent (): bool {
-        return $this->checkMaliciousTerms(config('laravel-shield.malicious_user_agents'), request()->header('user-agent'));
+    public function isMaliciousUserAgent($agent): bool {
+        return $this->checkMaliciousTerms(config('laravel-shield.malicious_user_agents'), $agent);
     }
 
-    public function isMaliciousPattern(): bool
+    public function isMaliciousPattern($input): bool
     {
-        return $this->checkMaliciousPatterns(config('laravel-shield.malicious_patterns'));
+        return $this->checkMaliciousPatterns(config('laravel-shield.malicious_patterns'), $input);
     }
 
-    private function checkMaliciousTerms(array $terms, string $uri): bool
+    private function checkMaliciousTerms(array $terms, string $malice): bool
     {
         foreach ($terms as $term) {
-            if (stripos($uri, $term) !== false) {
+            if (stripos($malice, $term) !== false) {
                 return true;
             }
         }
@@ -40,10 +40,10 @@ class LaravelBlocker
         return false;
     }
 
-    private function checkMaliciousPatterns($patterns): bool
+    private function checkMaliciousPatterns(array $patterns, string $malice): bool
     {
         foreach ($patterns as $pattern) {
-            if ($this->matchMaliciousPatterns($pattern, request()->input())) {
+            if ($this->matchMaliciousPatterns($pattern, $malice)) {
                 return true;
             }
         }
