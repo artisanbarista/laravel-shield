@@ -4,57 +4,53 @@ namespace Webdevartisan\LaravelBlocker;
 
 class LaravelBlocker
 {
-
     public function isMaliciousRequest(): bool
     {
-        return $this->isMaliciousUri(request()->fullUrl());
+        return match (true) {
+            $this->isMaliciousUri(request()->fullUrl()),
+            $this->isMaliciousUserAgent(request()->header('user-agent')),
+            $this->isMaliciousPattern(request()->input()) => true,
+            default => false,
+        };
     }
 
-    public function isMaliciousUri(string $uri): bool
+    public function isMaliciousUri($url): bool
     {
-        $search = preg_quote(implode('|', config('laravel-shield.malicious_urls')), '/');
-        $search = str_replace('\|', '|', $search);
-        preg_match('/(' . $search . ')/i', $uri, $matches);
-
-        if (empty($matches)) {
-            return false;
-        }
-
-        return true;
+        return $this->checkMaliciousTerms(config('laravel-shield.malicious_urls'), $url);
     }
 
-    public function getUserAgent () {
-        return request()->header('user-agent');
+    public function isMaliciousUserAgent($agent): bool {
+        return $this->checkMaliciousTerms(config('laravel-shield.malicious_user_agents'), $agent);
     }
 
-    public function isMaliciousUserAgent () {
-        $search = preg_quote(implode('|', config('laravel-shield.malicious_user_agents')), '/');
-        $search = str_replace('\|', '|', $search);
-        preg_match('/(' . $search . ')/i', $this->getUserAgent(), $matches);
-
-        if (empty($matches)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function isMaliciousPattern(): bool
+    public function isMaliciousPattern($input): bool
     {
-        return !empty($this->check(config('laravel-shield.malicious_patterns')));
+        return $this->checkMaliciousPatterns(config('laravel-shield.malicious_patterns'), $input);
     }
 
-    public function check($patterns)
+    private function checkMaliciousTerms(array $terms, string $malice): bool
     {
-        foreach ($patterns as $pattern) {
-            if ($this->match($pattern, request()->input())) {
+        foreach ($terms as $term) {
+            if (stripos($malice, $term) !== false) {
                 return true;
             }
         }
+
         return false;
     }
 
-    public function match($pattern, $input)
+    private function checkMaliciousPatterns(array $patterns, mixed $malice): bool
+    {
+        foreach ($patterns as $pattern) {
+            if ($this->matchMaliciousPatterns($pattern, $malice)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function matchMaliciousPatterns($pattern, $input)
     {
         $result = false;
 
@@ -72,7 +68,7 @@ class LaravelBlocker
             }
 
             if (is_array($value)) {
-                if (!$result = $this->match($pattern, $value)) {
+                if (!$result = $this->matchMaliciousPatterns($pattern, $value)) {
                     continue;
                 }
                 break;
@@ -84,6 +80,7 @@ class LaravelBlocker
 
             break;
         }
+
         return $result;
     }
 }

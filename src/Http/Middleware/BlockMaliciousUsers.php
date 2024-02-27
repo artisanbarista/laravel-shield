@@ -10,27 +10,26 @@ class BlockMaliciousUsers
 {
     public function handle($request, Closure $next)
     {
-        $protectionEnabled = config('laravel-shield.protection_enabled');
-
-        if (!$protectionEnabled) {
+        if (!config('laravel-shield.protection_enabled')) {
             return $next($request);
         }
 
-        $requestIp = $request->server('HTTP_CF_CONNECTING_IP') ?? $request->ip();
+        $ip = $request->server('HTTP_CF_CONNECTING_IP') ??
+              $request->server('HTTP_X_FORWARDED_FOR') ?? $request->ip();
 
-        if (in_array($requestIp, config('laravel-shield.ip_whitelist'), true)) {
+        if (in_array($ip, config('ip.whitelist') ?? [], true)) {
             return $next($request);
         }
 
         // Is this a blocked IP?
-        if (BlockedIpStore::has($requestIp)) {
+        if (BlockedIpStore::has($ip)) {
             return response('You have been blocked', 401);
         }
 
         // @see config/config.php
-        if (LaravelBlocker::isMaliciousRequest() || LaravelBlocker::isMaliciousUserAgent() || LaravelBlocker::isMaliciousPattern()) {
+        if (LaravelBlocker::isMaliciousRequest()) {
             // Store blocked IP
-            BlockedIpStore::create($requestIp);
+            BlockedIpStore::create($ip);
 
             return response('Not accepted', 406);
         }

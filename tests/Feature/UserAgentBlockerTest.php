@@ -22,10 +22,6 @@ class UserAgentBlockerTest extends TestCase
     const IP_ADDRESS = '123.456.78.90';
 
     /** @test */
-    public function itDeterminesUserAgentFromRequest()
-    {
-        $this->assertSame('Symfony', LaravelBlocker::getUserAgent());
-    }
 
     /** @test */
     public function itDeterminesMaliciousUserAgent()

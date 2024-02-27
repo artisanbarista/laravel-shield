@@ -45,6 +45,7 @@ return [
     */
     'malicious_urls' => [
         'call_user_func_array', 'invokefunction', 'wp-admin', 'wp-login', '.git', '.env', 'install.php', '/vendor',
+        'swagger-ui.html', 'api-doc', 'cgi-bin', 'asdlp', 'web-inf'
     ],
 
     'malicious_patterns' => [
@@ -87,8 +88,4 @@ return [
     |
     */
     'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreRateLimiter'),
-
-    'ip_whitelist' => [
-        //'xxx.xx.xx.x',
-    ]
 ];
