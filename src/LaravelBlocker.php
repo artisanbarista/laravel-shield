@@ -40,7 +40,7 @@ class LaravelBlocker
         return false;
     }
 
-    private function checkMaliciousPatterns(array $patterns, string $malice): bool
+    private function checkMaliciousPatterns(array $patterns, mixed $malice): bool
     {
         foreach ($patterns as $pattern) {
             if ($this->matchMaliciousPatterns($pattern, $malice)) {
