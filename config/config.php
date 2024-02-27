@@ -87,8 +87,4 @@ return [
     |
     */
     'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreRateLimiter'),
-
-    'ip_whitelist' => [
-        //'xxx.xx.xx.x',
-    ]
 ];
