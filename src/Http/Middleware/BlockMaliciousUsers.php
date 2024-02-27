@@ -10,9 +10,7 @@ class BlockMaliciousUsers
 {
     public function handle($request, Closure $next)
     {
-        $protectionEnabled = config('laravel-shield.protection_enabled');
-
-        if (!$protectionEnabled) {
+        if (!config('laravel-shield.protection_enabled')) {
             return $next($request);
         }
 
