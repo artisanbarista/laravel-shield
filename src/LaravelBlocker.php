@@ -21,7 +21,7 @@ class LaravelBlocker
     }
 
     public function isMaliciousUserAgent () {
-        return $this->checkMaliciousTerm($this->getUserAgent(), config('laravel-shield.malicious_user_agents'));
+        return $this->checkMaliciousTerm(request()->header('user-agent'), config('laravel-shield.malicious_user_agents'));
     }
 
     public function isMaliciousPattern(): bool
@@ -38,10 +38,6 @@ class LaravelBlocker
         }
 
         return false;
-    }
-
-    private function getUserAgent () {
-        return request()->header('user-agent');
     }
 
     private function check($patterns)
