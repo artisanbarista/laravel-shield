@@ -26,7 +26,7 @@ class LaravelBlocker
 
     public function isMaliciousPattern(): bool
     {
-        return !empty($this->check(config('laravel-shield.malicious_patterns')));
+        return $this->checkMaliciousPatterns(config('laravel-shield.malicious_patterns'));
     }
 
     private function checkMaliciousTerms(array $terms, string $uri): bool
@@ -40,10 +40,10 @@ class LaravelBlocker
         return false;
     }
 
-    private function check($patterns)
+    private function checkMaliciousPatterns($patterns): bool
     {
         foreach ($patterns as $pattern) {
-            if ($this->match($pattern, request()->input())) {
+            if ($this->matchMaliciousPatterns($pattern, request()->input())) {
                 return true;
             }
         }
@@ -51,7 +51,7 @@ class LaravelBlocker
         return false;
     }
 
-    private function match($pattern, $input)
+    private function matchMaliciousPatterns($pattern, $input)
     {
         $result = false;
 
@@ -69,7 +69,7 @@ class LaravelBlocker
             }
 
             if (is_array($value)) {
-                if (!$result = $this->match($pattern, $value)) {
+                if (!$result = $this->matchMaliciousPatterns($pattern, $value)) {
                     continue;
                 }
                 break;
