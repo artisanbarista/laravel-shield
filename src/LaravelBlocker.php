@@ -4,7 +4,6 @@ namespace Webdevartisan\LaravelBlocker;
 
 class LaravelBlocker
 {
-
     public function isMaliciousRequest(): bool
     {
         return match (true) {
