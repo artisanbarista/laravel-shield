@@ -17,11 +17,11 @@ class LaravelBlocker
 
     public function isMaliciousUri(): bool
     {
-        return $this->checkMaliciousTerm(request()->fullUrl(), config('laravel-shield.malicious_urls'));
+        return $this->checkMaliciousTerms(config('laravel-shield.malicious_urls'), request()->fullUrl());
     }
 
-    public function isMaliciousUserAgent () {
-        return $this->checkMaliciousTerm(request()->header('user-agent'), config('laravel-shield.malicious_user_agents'));
+    public function isMaliciousUserAgent (): bool {
+        return $this->checkMaliciousTerms(config('laravel-shield.malicious_user_agents'), request()->header('user-agent'));
     }
 
     public function isMaliciousPattern(): bool
@@ -29,10 +29,10 @@ class LaravelBlocker
         return !empty($this->check(config('laravel-shield.malicious_patterns')));
     }
 
-    private function checkMaliciousTerm(array $conf, string $uri): bool
+    private function checkMaliciousTerms(array $terms, string $uri): bool
     {
-        foreach ($conf as $malice) {
-            if (stripos($uri, $malice) !== false) {
+        foreach ($terms as $term) {
+            if (stripos($uri, $term) !== false) {
                 return true;
             }
         }
