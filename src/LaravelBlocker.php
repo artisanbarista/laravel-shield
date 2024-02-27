@@ -7,36 +7,21 @@ class LaravelBlocker
 
     public function isMaliciousRequest(): bool
     {
-        return $this->isMaliciousUri(request()->fullUrl());
+        return match (true) {
+            $this->isMaliciousUri(),
+            $this->isMaliciousUserAgent() => true,
+            $this->isMaliciousPattern() => true,
+            default => false,
+        };
     }
 
-    public function isMaliciousUri(string $uri): bool
+    public function isMaliciousUri(): bool
     {
-        $search = preg_quote(implode('|', config('laravel-shield.malicious_urls')), '/');
-        $search = str_replace('\|', '|', $search);
-        preg_match('/(' . $search . ')/i', $uri, $matches);
-
-        if (empty($matches)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function getUserAgent () {
-        return request()->header('user-agent');
+        return $this->checkMaliciousTerm(request()->fullUrl(), config('laravel-shield.malicious_urls'));
     }
 
     public function isMaliciousUserAgent () {
-        $search = preg_quote(implode('|', config('laravel-shield.malicious_user_agents')), '/');
-        $search = str_replace('\|', '|', $search);
-        preg_match('/(' . $search . ')/i', $this->getUserAgent(), $matches);
-
-        if (empty($matches)) {
-            return false;
-        }
-
-        return true;
+        return $this->checkMaliciousTerm($this->getUserAgent(), config('laravel-shield.malicious_user_agents'));
     }
 
     public function isMaliciousPattern(): bool
@@ -44,17 +29,33 @@ class LaravelBlocker
         return !empty($this->check(config('laravel-shield.malicious_patterns')));
     }
 
-    public function check($patterns)
+    private function checkMaliciousTerm(array $conf, string $uri): bool
+    {
+        foreach ($conf as $malice) {
+            if (stripos($uri, $malice) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getUserAgent () {
+        return request()->header('user-agent');
+    }
+
+    private function check($patterns)
     {
         foreach ($patterns as $pattern) {
             if ($this->match($pattern, request()->input())) {
                 return true;
             }
         }
+
         return false;
     }
 
-    public function match($pattern, $input)
+    private function match($pattern, $input)
     {
         $result = false;
 
@@ -84,6 +85,7 @@ class LaravelBlocker
 
             break;
         }
+
         return $result;
     }
 }

@@ -26,7 +26,7 @@ class BlockMaliciousUsers
         }
 
         // @see config/config.php
-        if (LaravelBlocker::isMaliciousRequest() || LaravelBlocker::isMaliciousUserAgent() || LaravelBlocker::isMaliciousPattern()) {
+        if (LaravelBlocker::isMaliciousRequest()) {
             // Store blocked IP
             BlockedIpStore::create($requestIp);
 
