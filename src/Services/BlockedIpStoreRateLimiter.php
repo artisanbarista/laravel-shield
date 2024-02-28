@@ -1,6 +1,6 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker\Services;
+namespace Webdevartisan\LaravelShield\Services;
 
 use Illuminate\Support\Facades\RateLimiter;
 

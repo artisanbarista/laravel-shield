@@ -1,11 +1,11 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker\Tests\Feature;
+namespace Webdevartisan\LaravelShield\Tests\Feature;
 
-use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
-use Webdevartisan\LaravelBlocker\Facades\LaravelBlocker;
-use Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers;
-use Webdevartisan\LaravelBlocker\Tests\TestCase;
+use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
+use Webdevartisan\LaravelShield\Facades\LaravelShield;
+use Webdevartisan\LaravelShield\Http\Middleware\BlockMaliciousUsers;
+use Webdevartisan\LaravelShield\Tests\TestCase;
 use Illuminate\Http\Request;
 
 /**
@@ -20,20 +20,20 @@ class UriBlockerTest extends TestCase
     public function itDeterminesAMaliciousUrlFromAString()
     {
         config(['laravel-shield.malicious_urls' => ['call_user_func_array']]);
-        $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/?invokefunction&function=call_user_func_array&vars[0]=phpinfo'));
+        $this->assertSame(true, LaravelShield::isMaliciousUri(self::HOST . '/?invokefunction&function=call_user_func_array&vars[0]=phpinfo'));
     }
 
     /** @test */
     public function itEscapesRegexCharacters()
     {
         config(['laravel-shield.malicious_urls' => ['wp-admin']]);
-        $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/wp-admin/'));
+        $this->assertSame(true, LaravelShield::isMaliciousUri(self::HOST . '/wp-admin/'));
 
         config(['laravel-shield.malicious_urls' => ['?foo']]);
-        $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/?foo=bar'));
+        $this->assertSame(true, LaravelShield::isMaliciousUri(self::HOST . '/?foo=bar'));
 
         config(['laravel-shield.malicious_urls' => ['.git']]);
-        $this->assertSame(true, LaravelBlocker::isMaliciousUri(self::HOST . '/.git'));
+        $this->assertSame(true, LaravelShield::isMaliciousUri(self::HOST . '/.git'));
     }
 
     /** @test */
@@ -41,7 +41,7 @@ class UriBlockerTest extends TestCase
     {
         // Request a malicious URL
         $this->mockMaliciousUrlInRequest();
-        $this->assertSame(true, LaravelBlocker::isMaliciousRequest());
+        $this->assertSame(true, LaravelShield::isMaliciousRequest());
     }
 
     /** @test */

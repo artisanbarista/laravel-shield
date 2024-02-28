@@ -21,7 +21,7 @@ To use it on all requests, add it as the first option to the `web` section under
 ```php
 protected $middlewareGroups = [
     'web' => [
-        \Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers::class,
+        \Webdevartisan\LaravelShield\Http\Middleware\BlockMaliciousUsers::class,
     ],
 ];
 ```
@@ -30,14 +30,14 @@ To use it on specific requests, add it to any group or to the `protected $middle
 
 ```php
 protected $middleware = [
-        \Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers::class,
+        \Webdevartisan\LaravelShield\Http\Middleware\BlockMaliciousUsers::class,
     ];
 ```
 
 Step 3: Optionally publish the config file with:
 
 ```
-php artisan vendor:publish --provider="Webdevartisan\LaravelBlocker\LaravelBlockerServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Webdevartisan\LaravelShield\LaravelShieldServiceProvider" --tag="config"
 ```
 
 ## Usage
@@ -87,15 +87,15 @@ AI_BLOCKER_MALICIOUS_USER_AGENTS='dotbot|linguee|seznam|mail.ru'
 
 ### Define storage class implementation
 
-By default, blocked IPs are stored in cache, using storage implementation `\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache::class`.
+By default, blocked IPs are stored in cache, using storage implementation `\Webdevartisan\LaravelShield\Services\BlockedIpStoreCache::class`.
 
 You can set the storage class you wish to use in the published config file, or by setting this value in .env. You can choose from:
-- \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache
-- \Webdevartisan\LaravelBlocker\Services\BlockedIpStoreDatabase
+- \Webdevartisan\LaravelShield\Services\BlockedIpStoreCache
+- \Webdevartisan\LaravelShield\Services\BlockedIpStoreDatabase
 
 
 ```apacheconf
-AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS='\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreCache'
+AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS='\Webdevartisan\LaravelShield\Services\BlockedIpStoreCache'
 ```
 
 ### Testing

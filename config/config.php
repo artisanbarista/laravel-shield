@@ -87,5 +87,5 @@ return [
     | Can be set by AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS in.env file
     |
     */
-    'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelBlocker\Services\BlockedIpStoreRateLimiter'),
+    'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter'),
 ];

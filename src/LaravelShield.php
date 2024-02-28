@@ -1,8 +1,8 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker;
+namespace Webdevartisan\LaravelShield;
 
-class LaravelBlocker
+class LaravelShield
 {
     public function isMaliciousRequest(): bool
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker;
+namespace Webdevartisan\LaravelShield;
 
-use Webdevartisan\LaravelBlocker\Services\BlockedIpStoreDatabase;
+use Webdevartisan\LaravelShield\Services\BlockedIpStoreDatabase;
 use Illuminate\Support\ServiceProvider;
 
-class LaravelBlockerServiceProvider extends ServiceProvider
+class LaravelShieldServiceProvider extends ServiceProvider
 {
 
     /**
@@ -30,7 +30,7 @@ class LaravelBlockerServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('laravel-shield', function () {
-            return new LaravelBlocker();
+            return new LaravelShield();
         });
 
 

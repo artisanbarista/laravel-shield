@@ -1,8 +1,8 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker\Tests;
+namespace Webdevartisan\LaravelShield\Tests;
 
-use Webdevartisan\LaravelBlocker\LaravelBlockerServiceProvider;
+use Webdevartisan\LaravelShield\LaravelShieldServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -11,7 +11,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelBlockerServiceProvider::class,
+            LaravelShieldServiceProvider::class,
         ];
     }
 

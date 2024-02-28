@@ -1,13 +1,13 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker\Facades;
+namespace Webdevartisan\LaravelShield\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Webdevartisan\LaravelBlocker\LaravelBlocker
+ * @see \Webdevartisan\LaravelShield\LaravelShield
  */
-class LaravelBlocker extends Facade
+class LaravelShield extends Facade
 {
 
     /**

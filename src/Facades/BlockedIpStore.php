@@ -1,6 +1,6 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker\Facades;
+namespace Webdevartisan\LaravelShield\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

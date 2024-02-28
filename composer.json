@@ -33,13 +33,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webdevartisan\\LaravelBlocker\\": "src",
-            "Webdevartisan\\LaravelBlocker\\Database\\Factories\\": "database/factories"
+            "Webdevartisan\\LaravelShield\\": "src",
+            "Webdevartisan\\LaravelShield\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Webdevartisan\\LaravelBlocker\\Tests\\": "tests"
+            "Webdevartisan\\LaravelShield\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -52,11 +52,11 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Webdevartisan\\LaravelBlocker\\LaravelBlockerServiceProvider"
+                "Webdevartisan\\LaravelShield\\LaravelShieldServiceProvider"
             ],
             "aliases": {
-                "LaravelBlocker": "LaravelBlocker",
-                "BlockedIpStore": "Webdevartisan\\LaravelBlocker\\Facades\\BlockedIpStore"
+                "LaravelShield": "LaravelShield",
+                "BlockedIpStore": "Webdevartisan\\LaravelShield\\Facades\\BlockedIpStore"
             }
         }
     }

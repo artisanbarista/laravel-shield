@@ -1,9 +1,9 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker\Http\Middleware;
+namespace Webdevartisan\LaravelShield\Http\Middleware;
 
-use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
-use Webdevartisan\LaravelBlocker\Facades\LaravelBlocker;
+use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
+use Webdevartisan\LaravelShield\Facades\LaravelShield;
 use Closure;
 
 class BlockMaliciousUsers
@@ -29,7 +29,7 @@ class BlockMaliciousUsers
         }
 
         // @see config/config.php
-        if (LaravelBlocker::isMaliciousRequest()) {
+        if (LaravelShield::isMaliciousRequest()) {
             // Store blocked IP
             BlockedIpStore::create($ip);
 

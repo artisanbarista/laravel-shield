@@ -1,11 +1,11 @@
 <?php
 
-namespace Webdevartisan\LaravelBlocker\Tests\Feature;
+namespace Webdevartisan\LaravelShield\Tests\Feature;
 
-use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
-use Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers;
-use Webdevartisan\LaravelBlocker\Facades\LaravelBlocker;
-use Webdevartisan\LaravelBlocker\Tests\TestCase;
+use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
+use Webdevartisan\LaravelShield\Http\Middleware\BlockMaliciousUsers;
+use Webdevartisan\LaravelShield\Facades\LaravelShield;
+use Webdevartisan\LaravelShield\Tests\TestCase;
 use Illuminate\Http\Request;
 
 /**
@@ -22,10 +22,10 @@ class UserAgentBlockerTest extends TestCase
     public function itDeterminesMaliciousUserAgent()
     {
         config(['laravel-shield.malicious_user_agents' => ['symfony']]);
-        $this->assertSame(true, LaravelBlocker::isMaliciousUserAgent(request()->header('user-agent')));
+        $this->assertSame(true, LaravelShield::isMaliciousUserAgent(request()->header('user-agent')));
 
         config(['laravel-shield.malicious_user_agents' => ['GoogleBot','BingBot']]);
-        $this->assertSame(false, LaravelBlocker::isMaliciousUserAgent(request()->header('user-agent')));
+        $this->assertSame(false, LaravelShield::isMaliciousUserAgent(request()->header('user-agent')));
     }
 
     /** @test */
