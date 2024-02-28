@@ -2,12 +2,10 @@
 
 namespace Webdevartisan\LaravelBlocker\Tests\Feature;
 
-use Webdevartisan\LaravelBlocker\Exceptions\MaliciousUserAgentException;
 use Webdevartisan\LaravelBlocker\Facades\BlockedIpStore;
 use Webdevartisan\LaravelBlocker\Http\Middleware\BlockMaliciousUsers;
 use Webdevartisan\LaravelBlocker\Facades\LaravelBlocker;
 use Webdevartisan\LaravelBlocker\Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 
 /**
@@ -15,9 +13,6 @@ use Illuminate\Http\Request;
  */
 class UserAgentBlockerTest extends TestCase
 {
-
-    use RefreshDatabase;
-
     const HOST = 'https://example.com';
     const IP_ADDRESS = '123.456.78.90';
 
@@ -26,22 +21,22 @@ class UserAgentBlockerTest extends TestCase
     /** @test */
     public function itDeterminesMaliciousUserAgent()
     {
-        config(['laravel-shield.malicious_user_agents' => 'symfony']);
-        $this->assertSame(true, LaravelBlocker::isMaliciousUserAgent());
+        config(['laravel-shield.malicious_user_agents' => ['symfony']]);
+        $this->assertSame(true, LaravelBlocker::isMaliciousUserAgent(request()->header('user-agent')));
 
-        config(['laravel-shield.malicious_user_agents' => 'GoogleBot|BingBot']);
-        $this->assertSame(false, LaravelBlocker::isMaliciousUserAgent());
+        config(['laravel-shield.malicious_user_agents' => ['GoogleBot','BingBot']]);
+        $this->assertSame(false, LaravelBlocker::isMaliciousUserAgent(request()->header('user-agent')));
     }
 
     /** @test */
     public function middlewareStoresIpOnMaliciousUserAgent()
     {
-        config(['laravel-shield.malicious_user_agents' => 'symfony']);
+        config(['laravel-shield.malicious_user_agents' => ['symfony']]);
         $this->get(self::HOST);
         $request = new Request();
         request()->server->add(['REMOTE_ADDR' => self::IP_ADDRESS]);
 
-        $this->expectException(MaliciousUserAgentException::class);
+        $this->expectExceptionCode(406);
 
         (new BlockMaliciousUsers())->handle($request, function ($request) {
             $this->assertSame(true, BlockedIpStore::has(self::IP_ADDRESS));
@@ -54,7 +49,7 @@ class UserAgentBlockerTest extends TestCase
         // Disable user_agent_detection_enabled
         config(['laravel-shield.user_agent_detection_enabled' => false]);
         // Request a malicious User Agent
-        config(['laravel-shield.malicious_user_agents' => 'symfony']);
+        config(['laravel-shield.malicious_user_agents' => ['symfony']]);
         $this->get(self::HOST);
         $request = new Request();
 

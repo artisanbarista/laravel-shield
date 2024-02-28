@@ -15,7 +15,9 @@ class BlockMaliciousUsers
         }
 
         $ip = $request->server('HTTP_CF_CONNECTING_IP') ??
-              $request->server('HTTP_X_FORWARDED_FOR') ?? $request->ip();
+              $request->server('HTTP_X_FORWARDED_FOR') ??
+              $request->ip() ??
+              request()->server('REMOTE_ADDR');
 
         if (in_array($ip, config('ip.whitelist') ?? [], true)) {
             return $next($request);
