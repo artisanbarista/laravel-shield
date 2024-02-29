@@ -11,10 +11,10 @@ return [
     |--------------------------------------------------------------------------
     |
     | Determines whether middleware checks for malicious URLs.
-    | Can be set by AI_BLOCKER_PROTECTION_ENABLED in .env file.
+    | Can be set by SHIELD_PROTECTION_ENABLED in .env file.
     |
     */
-    'protection_enabled' => env('AI_BLOCKER_PROTECTION_ENABLED', true),
+    'protection_enabled' => env('SHIELD_PROTECTION_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,11 +22,11 @@ return [
     |--------------------------------------------------------------------------
     |
     | Number of seconds before a blocked ip is deleted from the ai_blocked_ips table.
-    | Can be set by AI_BLOCKER_EXPIRATION_TIME in .env file.
+    | Can be set by SHIELD_EXPIRATION_TIME in .env file.
     |
     */
-    'expiration_time' => env('AI_BLOCKER_EXPIRATION_TIME', 3600),
-    'max_attempts' => env('AI_BLOCKER_MAX_ATTEMPTS', 5),
+    'expiration_time' => env('SHIELD_EXPIRATION_TIME', 3600),
+    'max_attempts' => env('SHIELD_MAX_ATTEMPTS', 5),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     | - URLs in the list are separated by a pipe. Example:
     |   If you wish to list both '.git' and 'install.php' the list should be '.git|install.php'
     |
-    | Can be set by AI_BLOCKER_MALICIOUS_URLS in.env file
+    | Can be set by SHIELD_MALICIOUS_URLS in.env file
     |
     */
     'malicious_urls' => [
@@ -70,7 +70,7 @@ return [
     | - User Agentss in the list are separated by a pipe. Example:
     |   If you wish to list both 'dotbot' and 'seznam' the list should be 'dotbot|seznam'
     |
-    | Can be set by AI_BLOCKER_MALICIOUS_USER_AGENTS in.env file
+    | Can be set by SHIELD_MALICIOUS_USER_AGENTS in.env file
     |
     */
     'malicious_user_agents' => [
@@ -84,8 +84,8 @@ return [
     |
     | The implementation you use to store blocked IPs with.
     |
-    | Can be set by AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS in.env file
+    | Can be set by SHIELD_STORAGE_IMPLEMENTATION_CLASS in.env file
     |
     */
-    'storage_implementation_class' => env('AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter'),
+    'storage_implementation_class' => env('SHIELD_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter'),
 ];

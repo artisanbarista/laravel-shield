@@ -1,10 +1,11 @@
 # Block bad bots and IPs that visit exploit URLs
 
-Your application is hammered by malicious bots and visitors that try out exploit URLs. This package detects those and blocks their IP addresses. Blocked users are denied access to your application until their block expires.
+Your application is hammered by malicious requests that try out exploit URLs. This package detects those and blocks their IP addresses. Blocked users are denied access to your application until their block expires.
 
 1. Block exploit URLs like `/wp-admin` and `?invokefunction&function=call_user_func_array&vars[0]=phpinfo`.
 2. Block user Agents like `Seznam`, `Flexbot` and `Mail.ru`.
 3. Set the expiration time for IP blocks.
+4. Set IP whitelist/blacklist.
 
 ## Installation
 
@@ -46,13 +47,12 @@ The package uses auto discover. The package uses a middleware class that does th
 
 ## Config settings
 
-### Enabling checking
+### Enabling shield
 
-You can enable or disable URL checking and User Agent checking in the published config file, or by setting these values in .env (enabled by default).
+You can enable or disable the shield in the published config file, or by setting the value in .env (enabled by default).
 
 ```apacheconf
-URL_DETECTION_ENABLED=true
-USER_AGENT_DETECTION_ENABLED=true
+SHIELD_PROTECTION_ENABLED=true
 ```
 
 ### Expiration time
@@ -60,7 +60,7 @@ USER_AGENT_DETECTION_ENABLED=true
 Set the block expiration time (in seconds) in the published config file, or by setting this value in .env (3600 seconds by default).
 
 ```apacheconf
-AI_BLOCKER_EXPIRATION_TIME=3600
+SHIELD_EXPIRATION_TIME=3600
 ```
 
 ### Define malicious URLs
@@ -72,30 +72,26 @@ Example: setting `wp-admin` will block both '/wp-admin', '/index.php/wp-admin/fo
 Defaults: `call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor`
 
 ```apacheconf
-AI_BLOCKER_MALICIOUS_URLS='call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor'
+SHIELD_MALICIOUS_URLS='call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor'
 ```
 
 ### Define malicious User Agents
 
-Define malicious User Agents in the published config file, or by setting this value in .env, separated by a pipe. You need only use part of the malicious string. Matching is case insensitive.
+Define malicious User Agents in the published config file.
 
 Example: setting `seznam` will block User Agent 'Mozilla/5.0 (compatible; SeznamBot/3.2-test4; +http://napoveda.seznam.cz/en/seznambot-intro/)'.
 
-```apacheconf
-AI_BLOCKER_MALICIOUS_USER_AGENTS='dotbot|linguee|seznam|mail.ru'
-```
 
 ### Define storage class implementation
 
-By default, blocked IPs are stored in cache, using storage implementation `\Webdevartisan\LaravelShield\Services\BlockedIpStoreCache::class`.
+By default, blocked IPs are stored in cache, using storage implementation `\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter::class`.
 
-You can set the storage class you wish to use in the published config file, or by setting this value in .env. You can choose from:
-- \Webdevartisan\LaravelShield\Services\BlockedIpStoreCache
-- \Webdevartisan\LaravelShield\Services\BlockedIpStoreDatabase
+You can create the storage class you wish to use in the published config file, or by setting this value in .env:
+- \Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter
 
 
 ```apacheconf
-AI_BLOCKER_STORAGE_IMPLEMENTATION_CLASS='\Webdevartisan\LaravelShield\Services\BlockedIpStoreCache'
+SHIELD_STORAGE_IMPLEMENTATION_CLASS='\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter'
 ```
 
 ### Testing
