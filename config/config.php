@@ -21,7 +21,7 @@ return [
     | Expiration time
     |--------------------------------------------------------------------------
     |
-    | Number of seconds before a blocked ip is deleted from the ai_blocked_ips table.
+    | Number of seconds before a blocked ip is deleted from the blocked_ips table.
     | Can be set by SHIELD_EXPIRATION_TIME in .env file.
     |
     */

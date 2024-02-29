@@ -63,17 +63,18 @@ Set the block expiration time (in seconds) in the published config file, or by s
 SHIELD_EXPIRATION_TIME=3600
 ```
 
+### Maximum Attempts
+Set the maximum allowed number of malicious requests, before blocking the IP. Default is 5. You can change it in the config or the .env.
+```apacheconf
+SHIELD_MAX_ATTEMPTS=5
+```
+
 ### Define malicious URLs
 
-Define malicious URLs in the published config file, or by setting this value in .env, separated by a pipe. You need only use part of the malicious string. Matching is case insensitive.
+Define malicious URLs in the published config file. You need only use part of the malicious string. Matching is case insensitive.
 
 Example: setting `wp-admin` will block both '/wp-admin', '/index.php/wp-admin/foo' and '/?p=wp-admin'.
 
-Defaults: `call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor`
-
-```apacheconf
-SHIELD_MALICIOUS_URLS='call_user_func_array|invokefunction|wp-admin|wp-login|.git|.env|install.php|/vendor'
-```
 
 ### Define malicious User Agents
 
@@ -86,7 +87,7 @@ Example: setting `seznam` will block User Agent 'Mozilla/5.0 (compatible; Seznam
 
 By default, blocked IPs are stored in cache, using storage implementation `\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter::class`.
 
-You can create the storage class you wish to use in the published config file, or by setting this value in .env:
+You can create a different storage class you wish to use, and replace it in the config file, or by setting this value in .env:
 - \Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter
 
 
