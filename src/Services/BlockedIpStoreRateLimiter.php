@@ -32,7 +32,7 @@ class BlockedIpStoreRateLimiter implements BlockedIpStoreInterface
 
     protected function getMaxAttempts(): int
     {
-        return config('laravel-shield.max_attempts');
+        return config('shield.max_attempts');
     }
 
     protected function getRateLimiterKey($ip): string
@@ -42,6 +42,6 @@ class BlockedIpStoreRateLimiter implements BlockedIpStoreInterface
 
     protected function getExpirationTime(?int $decaySeconds): int
     {
-        return $decaySeconds ?: config('laravel-shield.expiration_time');
+        return $decaySeconds ?: config('shield.expiration_time');
     }
 }

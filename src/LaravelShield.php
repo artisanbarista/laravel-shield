@@ -16,16 +16,16 @@ class LaravelShield
 
     public function isMaliciousUri($url): bool
     {
-        return $this->checkMaliciousTerms(config('laravel-shield.malicious_urls'), $url);
+        return $this->checkMaliciousTerms(config('shield.malicious_urls'), $url);
     }
 
     public function isMaliciousUserAgent($agent): bool {
-        return $this->checkMaliciousTerms(config('laravel-shield.malicious_user_agents'), $agent);
+        return $this->checkMaliciousTerms(config('shield.malicious_user_agents'), $agent);
     }
 
     public function isMaliciousPattern($input): bool
     {
-        return $this->checkMaliciousPatterns(config('laravel-shield.malicious_patterns'), $input);
+        return $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $input);
     }
 
     private function checkMaliciousTerms(array $terms, string $malice): bool
