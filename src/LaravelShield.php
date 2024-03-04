@@ -2,6 +2,9 @@
 
 namespace Webdevartisan\LaravelShield;
 
+use Illuminate\Support\Facades\Log;
+use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
+
 class LaravelShield
 {
     public function isMaliciousRequest(): bool
@@ -26,6 +29,13 @@ class LaravelShield
     public function isMaliciousPattern($input): bool
     {
         return $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $input);
+    }
+
+    public function log($ip, $msg)
+    {
+        if (config('shield.logging_enabled') && (BlockedIpStore::attempts($ip) === config('shield.max_attempts'))) {
+            Log::info("$ip $msg");
+        }
     }
 
     private function checkMaliciousTerms(array $terms, string $malice): bool
