@@ -15,6 +15,16 @@ return [
     |
     */
     'protection_enabled' => env('SHIELD_PROTECTION_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enables Logging
+    |--------------------------------------------------------------------------
+    |
+    | Logs for when malicious request is detected/blocked.
+    | Can be set by SHIELD_LOGGING_ENABLED in .env file.
+    |
+    */
     'logging_enabled' => env('SHIELD_LOGGING_ENABLED', false),
 
     /*
@@ -27,6 +37,16 @@ return [
     |
     */
     'expiration_time' => env('SHIELD_EXPIRATION_TIME', 3600),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Max Attempts
+    |--------------------------------------------------------------------------
+    |
+    | Number of attempts allowed before blocking the IP.
+    | Can be set by SHIELD_MAX_ATTEMPTS in .env file.
+    |
+    */
     'max_attempts' => env('SHIELD_MAX_ATTEMPTS', 5),
 
     /*
