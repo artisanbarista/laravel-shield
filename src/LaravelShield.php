@@ -31,11 +31,13 @@ class LaravelShield
         return $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $input);
     }
 
-    public function log($ip, $msg)
+    public function log($message): void
     {
-        if (config('shield.logging_enabled') && (BlockedIpStore::attempts($ip) === config('shield.max_attempts'))) {
-            Log::info("$ip $msg");
+        if (!config('shield.logging_enabled')) {
+            return;
         }
+
+        Log::info($message);
     }
 
     private function checkMaliciousTerms(array $terms, string $malice): bool
