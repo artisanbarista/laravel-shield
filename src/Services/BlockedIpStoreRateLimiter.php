@@ -30,6 +30,11 @@ class BlockedIpStoreRateLimiter implements BlockedIpStoreInterface
         return true;
     }
 
+    public function attempts(string $ip): int
+    {
+        return RateLimiter::attempts($this->getRateLimiterKey($ip));
+    }
+
     protected function getMaxAttempts(): int
     {
         return config('shield.max_attempts');

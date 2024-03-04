@@ -15,6 +15,7 @@ return [
     |
     */
     'protection_enabled' => env('SHIELD_PROTECTION_ENABLED', true),
+    'logging_enabled' => env('SHIELD_LOGGING_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------

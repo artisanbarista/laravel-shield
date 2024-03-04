@@ -5,6 +5,7 @@ namespace Webdevartisan\LaravelShield\Http\Middleware;
 use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
 use Webdevartisan\LaravelShield\Facades\LaravelShield;
 use Closure;
+use Illuminate\Support\Facades\Log;
 
 class BlockMaliciousUsers
 {
@@ -25,14 +26,19 @@ class BlockMaliciousUsers
 
         // Is this a blocked IP?
         if (BlockedIpStore::has($ip)) {
+            if (config('shield.logging_enabled') && (BlockedIpStore::attempts($ip) === config('shield.max_attempts'))) {
+                Log::info("$ip Malicious IP Blocked");
+            }
             return response('You have been blocked', 401);
         }
 
         // @see config/config.php
         if (LaravelShield::isMaliciousRequest()) {
+            if (config('shield.logging_enabled')) {
+                Log::info("$ip Malicious Request Detected");
+            }
             // Store blocked IP
             BlockedIpStore::create($ip);
-
             return response('Not accepted', 406);
         }
 
