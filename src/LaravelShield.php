@@ -9,8 +9,8 @@ class LaravelShield
     public function isMaliciousRequest(): bool
     {
         return match (true) {
+            $this->isMaliciousUserAgent(request()->userAgent()),
             $this->isMaliciousUri(request()->fullUrl()),
-            $this->isMaliciousUserAgent(request()->header('user-agent')),
             $this->isMaliciousPattern(request()->input()) => true,
             default => false,
         };
@@ -22,6 +22,9 @@ class LaravelShield
     }
 
     public function isMaliciousUserAgent($agent): bool {
+        if(!is_string($agent) || empty($agent)) {
+            return true;
+        }
         return $this->checkMaliciousTerms(config('shield.malicious_user_agents'), $agent);
     }
 
@@ -36,7 +39,7 @@ class LaravelShield
             return;
         }
 
-        Log::info($message);
+        Log::notice($message);
     }
 
     private function checkMaliciousTerms(array $terms, string $malice): bool
