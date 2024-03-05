@@ -21,10 +21,12 @@ class LaravelShield
         return $this->checkMaliciousTerms(config('shield.malicious_urls'), $url);
     }
 
-    public function isMaliciousUserAgent($agent): bool {
+    public function isMaliciousUserAgent($agent): bool
+    {
         if(!is_string($agent) || empty($agent)) {
             return true;
         }
+        
         return $this->checkMaliciousTerms(config('shield.malicious_user_agents'), $agent);
     }
 
