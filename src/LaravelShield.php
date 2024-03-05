@@ -3,7 +3,6 @@
 namespace Webdevartisan\LaravelShield;
 
 use Illuminate\Support\Facades\Log;
-use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
 
 class LaravelShield
 {
