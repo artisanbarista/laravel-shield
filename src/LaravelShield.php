@@ -25,7 +25,7 @@ class LaravelShield
 
     public function isMaliciousUri($url): bool
     {
-        return $this->checkMaliciousTerms(config('shield.malicious_urls'), $url);
+        return $this->checkMaliciousTerms(config('shield.malicious_urls'), urldecode($url));
     }
 
     public function isMaliciousUserAgent($agent): bool

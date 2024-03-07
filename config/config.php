@@ -62,7 +62,7 @@ return [
     */
     'malicious_urls' => [
         'call_user_func_array', 'invokefunction', 'wp-admin', 'wp-login', '.git', '.env', 'install.php', '/vendor',
-        'swagger-ui.html', 'api-doc', 'cgi-bin', 'asdlp', 'web-inf'
+        'swagger-ui.html', 'api-doc', 'cgi-bin', 'asdlp', 'web-inf', '../',
     ],
 
     /*
@@ -81,6 +81,7 @@ return [
     |
     */
     'malicious_patterns' => [
+        '#php://#', '#glob://#', '#phar://#', '#bzip2://#', '#expect://#', '#ogg://#', '#rar://#', '#ssh2://#', '#zip://#', '#zlib://#', // PHP wrappers.
         '#\.\/#is', // LFI.
         '#(http|ftp){1,1}(s){0,1}://.*#i', // RFI.
         '#[\d\W](union select|union join|union distinct)[\d\W]#is', // SQLi.
@@ -88,7 +89,6 @@ return [
         '/<script[^>]*?>.*?<\/script>/is', // XSS.
         '/;|\||&|\n|\r|\$|\(|\)|\`|\"|\'|\{|\}|\[|\]|<|>|~/is', // Command Injection.
         '/(\%255c|\%252e){2,}/is', // Path Traversal.
-        '#bzip2://#', '#expect://#', '#glob://#', '#phar://#', '#php://#', '#ogg://#', '#rar://#', '#ssh2://#', '#zip://#', '#zlib://#' // PHP wrappers.
     ],
 
     /*
