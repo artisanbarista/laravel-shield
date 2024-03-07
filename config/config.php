@@ -54,14 +54,10 @@ return [
     | Malicious URLS
     |--------------------------------------------------------------------------
     |
-    | A list of malicious URL parts.
+    |   These are common paths that attackers might try to access to exploit vulnerabilities or gather information.
     | - A malicious URL parts needs only be part of the URL. Example:
     |   'wp-admin' triggers the URL '/wp-admin', but also 'wp-admin/foo' and 'index.php?wp-admin=bar'
     | - the URL strings are case insensitive.
-    | - URLs in the list are separated by a pipe. Example:
-    |   If you wish to list both '.git' and 'install.php' the list should be '.git|install.php'
-    |
-    | Can be set by SHIELD_MALICIOUS_URLS in.env file
     |
     */
     'malicious_urls' => [
@@ -69,33 +65,58 @@ return [
         'swagger-ui.html', 'api-doc', 'cgi-bin', 'asdlp', 'web-inf'
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Malicious Patterns
+    |--------------------------------------------------------------------------
+    |
+    |   These are regular expressions that match patterns commonly found in attacks:
+    | - LFI: This pattern detects Local File Inclusion. Attacks where an attacker attempts to access files on the server by using relative paths.
+    | - RFI: This pattern detects Remote File Inclusion. Attacks where an attacker attempts to make the server execute or display content from a remote server.
+    | - SQLi: These patterns detect SQL Injection attacks where an attacker attempts to manipulate SQL queries by injecting malicious SQL code.
+    | - XSS: This pattern is used to detect Cross-Site Scripting (XSS) attacks.
+    | - Command Injection: Command Injection attacks occur when an attacker is able to execute arbitrary commands on the host operating system. This pattern matches any string that contains characters often used in command injection attacks, such as semicolon (;), pipe (|), ampersand (&), newline (\n), carriage return (\r), dollar sign ($), parentheses ((or)), backtick (``  ``), double quote ("), single quote ('), curly braces ({ or }), square brackets ([ or ]), less than (<), greater than (>), or tilde slash (~/).
+    | - Path Traversal: This pattern is used to detect Directory Traversal attacks, also known as Path Traversal. These attacks exploit insufficient security validation/sanitization of user-supplied input file names. The pattern matches any string that contains ../, ..\, or ~/, which are used in directory traversal attacks to navigate file directories.
+    | - PHP wrappers which can be used in file inclusion attacks.
+    |
+    */
     'malicious_patterns' => [
-        '#\.\/#is', // lfi
-        '#(http|ftp){1,1}(s){0,1}://.*#i', // rfi
-        '@[\|:]O:\d{1,}:"[\w_][\w\d_]{0,}":\d{1,}:{@i', // session
-        '@[\|:]a:\d{1,}:{@i', // session
-        '#[\d\W](union select|union join|union distinct)[\d\W]#is', // sqli
-        '#[\d\W](union|union select|insert|from|where|concat|into|cast|truncate|select|delete|having)[\d\W]#is', // sqli
-        //'bzip2://', 'expect://', 'glob://', 'phar://', 'php://', 'ogg://', 'rar://', 'ssh2://', 'zip://', 'zlib://', // php
+        '#\.\/#is', // LFI.
+        '#(http|ftp){1,1}(s){0,1}://.*#i', // RFI.
+        '#[\d\W](union select|union join|union distinct)[\d\W]#is', // SQLi.
+        '#[\d\W](union|union select|insert|from|where|concat|into|cast|truncate|select|delete|having)[\d\W]#is', // SQLi.
+        '/<script[^>]*?>.*?<\/script>/is', // XSS.
+        '/;|\||&|\n|\r|\$|\(|\)|\`|\"|\'|\{|\}|\[|\]|<|>|~/is', // Command Injection.
+        '/(\%255c|\%252e){2,}/is', // Path Traversal.
+        '#bzip2://#', '#expect://#', '#glob://#', '#phar://#', '#php://#', '#ogg://#', '#rar://#', '#ssh2://#', '#zip://#', '#zlib://#' // PHP wrappers.
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Malicious User Agent
+    | Cookie Malicious Patterns
     |--------------------------------------------------------------------------
     |
-    | A list of malicious User Agents.
+    |   These are regular expressions that match patterns commonly found in attacks:
+    | - CRLF: This pattern is used to detect Carriage Return Line Feed (CRLF) Injection attacks. CRLF Injection attacks occur when an attacker inserts a CRLF sequence into an HTTP stream, which can lead to response splitting and other results. The pattern matches any string that contains %0d, %0a, \r, or \n, which represent CRLF characters.
+    |
+    */
+    'malicious_cookie_patterns' => [
+        '/\%0d|\%0a|\r|\n/is', // CRLF Injection
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Malicious User Agents
+    |--------------------------------------------------------------------------
+    |
+    | These are user agents that are known to be used by malicious bots.
     | - A malicious User Agents string needs only be part of the User Agents. Example:
     |   'dotbot' triggers the User Agent 'Mozilla/5.0 (compatible; DotBot/1.1; http://www.dotnetdotcom.org/, crawler@dotnetdotcom.org)'
     | - the User Agent strings are case insensitive.
-    | - User Agentss in the list are separated by a pipe. Example:
-    |   If you wish to list both 'dotbot' and 'seznam' the list should be 'dotbot|seznam'
-    |
-    | Can be set by SHIELD_MALICIOUS_USER_AGENTS in.env file
     |
     */
     'malicious_user_agents' => [
-        'dotbot', 'linguee'
+        'dotbot', 'linguee', 'sqlmap', 'nikto', 'curl', 'wget', 'python', 'perl', 'nmap', 'winhttp', 'clshttp', 'loader'
     ],
 
     /*

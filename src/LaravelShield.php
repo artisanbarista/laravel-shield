@@ -11,9 +11,16 @@ class LaravelShield
         return match (true) {
             $this->isMaliciousUserAgent(request()->userAgent()),
             $this->isMaliciousUri(request()->fullUrl()),
+            $this->isMaliciousCookie(request()->cookies->all()),
+            $this->isMaliciousPattern(request()->path()),
             $this->isMaliciousPattern(request()->input()) => true,
             default => false,
         };
+    }
+
+    public function isMaliciousCookie($cookies): bool
+    {
+        return $this->checkMaliciousPatterns(config('shield.malicious_cookie_patterns'), $cookies);
     }
 
     public function isMaliciousUri($url): bool
@@ -26,7 +33,7 @@ class LaravelShield
         if(!is_string($agent) || empty($agent)) {
             return true;
         }
-        
+
         return $this->checkMaliciousTerms(config('shield.malicious_user_agents'), $agent);
     }
 
@@ -84,17 +91,15 @@ class LaravelShield
             }
 
             if (is_array($value)) {
-                if (!$result = $this->matchMaliciousPatterns($pattern, $value)) {
-                    continue;
+                if ($result = $this->matchMaliciousPatterns($pattern, $value)) {
+                    break;
                 }
-                break;
+                continue;
             }
 
             if ($result = preg_match($pattern, $value)) {
                 break;
             }
-
-            break;
         }
 
         return $result;
