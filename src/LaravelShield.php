@@ -8,6 +8,10 @@ class LaravelShield
 {
     public function isMaliciousRequest(): bool
     {
+        if (count(request()->only(['utm_medium', 'utm_source', 'utm_campaign', 'utm_content', 'utm_term'])) === 5) {
+            return false;
+        }
+
         return match (true) {
             $this->isMaliciousUserAgent(request()->userAgent()),
             $this->isMaliciousUri(request()->fullUrl()),
