@@ -32,7 +32,7 @@ class BlockMaliciousUsers
         if (LaravelShield::isMaliciousRequest()) {
 
             if (LaravelShield::isValidBot($ip)) {
-                $next($request);
+                return $next($request);
             }
 
             // Store blocked IP
