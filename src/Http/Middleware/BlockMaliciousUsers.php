@@ -30,6 +30,11 @@ class BlockMaliciousUsers
 
         // @see config/config.php
         if (LaravelShield::isMaliciousRequest()) {
+
+            if (LaravelShield::isValidBot($ip)) {
+                $next($request);
+            }
+
             // Store blocked IP
             BlockedIpStore::create($ip);
 

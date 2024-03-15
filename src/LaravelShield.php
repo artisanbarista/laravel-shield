@@ -3,6 +3,7 @@
 namespace Webdevartisan\LaravelShield;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class LaravelShield
 {
@@ -44,6 +45,22 @@ class LaravelShield
     public function isMaliciousPattern($input): bool
     {
         return $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $input);
+    }
+
+    public function isValidBot($ip) : bool
+    {
+        $host = gethostbyaddr($ip);
+        $ipAfterLookup = gethostbyname($host);
+
+        if ($host === $ipAfterLookup) {
+            return false;
+        }
+
+        $hostIsValid = !!array_filter(config('shield.whitelist_hosts'), function ($validHost) use ($host) {
+            return Str::endsWith($host, $validHost);
+        });
+
+        return $hostIsValid && $ipAfterLookup === $ip;
     }
 
     public function log($message): void
