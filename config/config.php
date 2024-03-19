@@ -113,7 +113,7 @@ return [
 
         // SQLi
         '#[\d\W](union select|union join|union distinct)[\d\W]#is',
-        '#[\d\W](union|union select|insert|from|where|concat|into|cast|truncate|select|delete|having)[\d\W]#is',
+        "#(\bunion\b|\bselect\b|\binsert\b|\bfrom\b|\bwhere\b|\bconcat\b|\binto\b|\bcast\b|\btruncate\b|\bdelete\b|\bhaving\b).*('--|\' OR \'|\';)#is",
 
         // XSS.
         '/<script[^>]*?>.*?<\/script>/is',
