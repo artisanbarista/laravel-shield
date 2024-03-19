@@ -19,9 +19,15 @@ class BlockMaliciousUsers
               $request->ip() ??
               request()->server('REMOTE_ADDR');
 
+        if (in_array($ip, config('ip.whitelist') ?? [], true)) {
+            if (LaravelShield::isMaliciousRequest()) {
+                abort(401);
+            }
+        }
+
         // Is this a blocked IP?
         if (BlockedIpStore::has($ip)) {
-            return response('You have been blocked', 401);
+            abort(401);
         }
 
         // @see config/config.php
@@ -31,16 +37,14 @@ class BlockMaliciousUsers
                 return $next($request);
             }
 
-            if (!in_array($ip, config('ip.whitelist') ?? [], true)) {
-                // Store blocked IP
-                BlockedIpStore::create($ip);
+            // Store blocked IP
+            BlockedIpStore::create($ip);
 
-                if (BlockedIpStore::attempts($ip) === config('shield.max_attempts')) {
-                    LaravelShield::log("$ip Malicious IP Blocked");
-                }
+            if (BlockedIpStore::attempts($ip) === config('shield.max_attempts')) {
+                LaravelShield::log("$ip Malicious IP Blocked");
             }
 
-            return response('Not accepted', 406);
+            abort(401);
         }
 
         return $next($request);
