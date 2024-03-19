@@ -41,7 +41,7 @@ class BlockMaliciousUsers
             BlockedIpStore::create($ip);
 
             if (BlockedIpStore::attempts($ip) === config('shield.max_attempts')) {
-                LaravelShield::log("$ip Malicious IP Blocked");
+                LaravelShield::log($ip . " Malicious IP Blocked. Reason: " . LaravelShield::getMatchDescription());
             }
 
             abort(401);

@@ -7,20 +7,41 @@ use Illuminate\Support\Str;
 
 class LaravelShield
 {
+    private string $matchDescription;
+
     public function isMaliciousRequest(): bool
     {
         if (count(request()->only(['utm_medium', 'utm_source', 'utm_campaign', 'utm_content', 'utm_term'])) === 5) {
             return false;
         }
 
-        return match (true) {
-            $this->isMaliciousUserAgent(request()->userAgent()),
-            $this->isMaliciousUri(request()->fullUrl()),
-            $this->isMaliciousCookie(request()->cookies->all()),
-            $this->isMaliciousPattern(request()->path()),
-            $this->isMaliciousPattern(request()->input()) => true,
-            default => false,
-        };
+        if ($this->isMaliciousUserAgent(request()->userAgent())) {
+            $this->matchDescription = "Malicious user agent found.";
+            return true;
+        }
+        if ($this->isMaliciousUri(request()->fullUrl())) {
+            $this->matchDescription = "Malicious URI found.";
+            return true;
+        }
+        if ($this->isMaliciousCookie(request()->cookies->all())) {
+            $this->matchDescription = "Malicious cookies found.";
+            return true;
+        }
+        if ($this->isMaliciousPattern(request()->path())) {
+            $this->matchDescription = "Malicious pattern in path found.";
+            return true;
+        }
+        if ($this->isMaliciousPattern(request()->input())) {
+            $this->matchDescription = "Malicious pattern in input found.";
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getMatchDescription(): string
+    {
+        return $this->matchDescription;
     }
 
     public function isMaliciousCookie($cookies): bool
