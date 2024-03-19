@@ -15,28 +15,14 @@ class LaravelShield
             return false;
         }
 
-        if ($this->isMaliciousUserAgent(request()->userAgent())) {
-            $this->matchDescription = "Malicious user agent found.";
-            return true;
-        }
-        if ($this->isMaliciousUri(request()->fullUrl())) {
-            $this->matchDescription = "Malicious URI found.";
-            return true;
-        }
-        if ($this->isMaliciousCookie(request()->cookies->all())) {
-            $this->matchDescription = "Malicious cookies found.";
-            return true;
-        }
-        if ($this->isMaliciousPattern(request()->path())) {
-            $this->matchDescription = "Malicious pattern in path found.";
-            return true;
-        }
-        if ($this->isMaliciousPattern(request()->input())) {
-            $this->matchDescription = "Malicious pattern in input found.";
-            return true;
-        }
-
-        return false;
+        return match (true) {
+            $this->isMaliciousUserAgent(request()->userAgent()),
+            $this->isMaliciousUri(request()->fullUrl()),
+            $this->isMaliciousCookie(request()->cookies->all()),
+            $this->isMaliciousPatternPath(request()->path()),
+            $this->isMaliciousPatternInput(request()->input()) => true,
+            default => false,
+        };
     }
 
     public function getMatchDescription(): string
@@ -46,26 +32,48 @@ class LaravelShield
 
     public function isMaliciousCookie($cookies): bool
     {
-        return $this->checkMaliciousPatterns(config('shield.malicious_cookie_patterns'), $cookies);
+        if ($match = $this->checkMaliciousPatterns(config('shield.malicious_cookie_patterns'), $cookies)) {
+            $this->matchDescription = "Malicious cookies.";
+        }
+        return $match;
     }
 
     public function isMaliciousUri($url): bool
     {
-        return $this->checkMaliciousTerms(config('shield.malicious_urls'), urldecode($url));
+        if ($match = $this->checkMaliciousTerms(config('shield.malicious_urls'), urldecode($url))) {
+            $this->matchDescription = "Malicious URI.";
+        }
+        return $match;
     }
 
     public function isMaliciousUserAgent($agent): bool
     {
+        $description = "Malicious user agent.";
         if(!is_string($agent) || empty($agent)) {
+            $this->matchDescription = $description;
             return true;
         }
 
-        return $this->checkMaliciousTerms(config('shield.malicious_user_agents'), $agent);
+        if ($match = $this->checkMaliciousTerms(config('shield.malicious_user_agents'), $agent)) {
+            $this->matchDescription = $description;
+        }
+        return $match;
     }
 
-    public function isMaliciousPattern($input): bool
+    public function isMaliciousPatternInput($input): bool
     {
-        return $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $input);
+        if ($match = $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $input)) {
+            $this->matchDescription = "Malicious pattern in input.";
+        }
+        return $match;
+    }
+
+    public function isMaliciousPatternPath($path): bool
+    {
+        if ($match = $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $path)) {
+            $this->matchDescription = "Malicious pattern in path.";
+        }
+        return $match;
     }
 
     public function isValidBot($ip) : bool
