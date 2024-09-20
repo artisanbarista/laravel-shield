@@ -11,13 +11,9 @@ class LaravelShield
 
     public function isMaliciousRequest(): bool
     {
-        if (count(request()->only(['utm_medium', 'utm_source', 'utm_campaign', 'utm_content', 'utm_term'])) === count(request()->query())) {
-            return false;
-        }
-
         return match (true) {
-            $this->isMaliciousUserAgent(request()->userAgent()),
             $this->isMaliciousUri(request()->fullUrl()),
+            $this->isMaliciousUserAgent(request()->userAgent()),
             $this->isMaliciousCookie(request()->cookies->all()),
             $this->isMaliciousPatternPath(request()->path()),
             $this->isMaliciousPatternInput(request()->input()) => true,
@@ -40,9 +36,12 @@ class LaravelShield
 
     public function isMaliciousUri($url): bool
     {
-        if ($match = $this->checkMaliciousTerms(config('shield.malicious_urls'), urldecode($url))) {
+        if ($match = (
+            $this->whitelistUtms() && $this->checkMaliciousTerms(config('shield.malicious_urls'), urldecode($url)))
+        ) {
             $this->matchDescription = "Malicious URI.";
         }
+
         return $match;
     }
 
@@ -110,6 +109,17 @@ class LaravelShield
         }
 
         return false;
+    }
+
+    private function whitelistUtms(): bool
+    {
+        $utms = ['utm_medium', 'utm_source', 'utm_campaign', 'utm_content', 'utm_term'];
+
+        if (!count(request()->only($utms)) === count(request()->query()) && request()->has($utms)) {
+            return false;
+        }
+
+        return true;
     }
 
     private function checkMaliciousPatterns(array $patterns, mixed $malice): bool
