@@ -3,6 +3,7 @@
 namespace Webdevartisan\LaravelShield;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class LaravelShield
@@ -11,12 +12,21 @@ class LaravelShield
 
     public function isMaliciousRequest(): bool
     {
+        $request = request();
+
+        if ($this->isMaliciousUri($request->fullUrl())) {
+            return true;
+        }
+
+        if ($this->whitelistUtms()) {
+            return false;
+        }
+
         return match (true) {
-            $this->isMaliciousUri(request()->fullUrl()),
-            $this->isMaliciousUserAgent(request()->userAgent()),
-            $this->isMaliciousCookie(request()->cookies->all()),
-            $this->isMaliciousPatternPath(request()->path()),
-            $this->isMaliciousPatternInput(request()->input()) => true,
+            $this->isMaliciousUserAgent($request->userAgent()),
+            $this->isMaliciousCookie($request->cookies->all()),
+            $this->isMaliciousPatternPath($request->path()),
+            $this->isMaliciousPatternInput($request->input()) => true,
             default => false,
         };
     }
@@ -31,17 +41,16 @@ class LaravelShield
         if ($match = $this->checkMaliciousPatterns(config('shield.malicious_cookie_patterns'), $cookies)) {
             $this->matchDescription = "Malicious cookies.";
         }
+        
         return $match;
     }
 
     public function isMaliciousUri($url): bool
     {
-        if ($match = (
-            $this->whitelistUtms() && $this->checkMaliciousTerms(config('shield.malicious_urls'), urldecode($url)))
-        ) {
+        if ($match = $this->checkMaliciousTerms(config('shield.malicious_urls'), urldecode($url))) {
             $this->matchDescription = "Malicious URI.";
         }
-
+        
         return $match;
     }
 
@@ -56,6 +65,7 @@ class LaravelShield
         if ($match = $this->checkMaliciousTerms(config('shield.malicious_user_agents'), $agent)) {
             $this->matchDescription = $description;
         }
+
         return $match;
     }
 
@@ -64,6 +74,7 @@ class LaravelShield
         if ($match = $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $input)) {
             $this->matchDescription = "Malicious pattern in input.";
         }
+        
         return $match;
     }
 
@@ -72,6 +83,7 @@ class LaravelShield
         if ($match = $this->checkMaliciousPatterns(config('shield.malicious_patterns'), $path)) {
             $this->matchDescription = "Malicious pattern in path.";
         }
+        
         return $match;
     }
 
@@ -113,13 +125,19 @@ class LaravelShield
 
     private function whitelistUtms(): bool
     {
+        $request = request();
         $utms = ['utm_medium', 'utm_source', 'utm_campaign', 'utm_content', 'utm_term'];
 
-        if (!count(request()->only($utms)) === count(request()->query()) && request()->has($utms)) {
+        $validator = Validator::make($request->all(),
+            array_fill_keys($utms, 'required|string|regex:/^[a-zA-Z0-9_\-]+$/')
+        );
+
+        if ($validator->fails()) {
             return false;
         }
 
-        return true;
+        return (count($request->only($utms)) === count($request->query()) && $request->has($utms));
+
     }
 
     private function checkMaliciousPatterns(array $patterns, mixed $malice): bool
