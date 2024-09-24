@@ -126,18 +126,30 @@ class LaravelShield
     private function whitelistUtms(): bool
     {
         $request = request();
-        $utms = ['utm_medium', 'utm_source', 'utm_campaign', 'utm_content', 'utm_term'];
 
-        $validator = Validator::make($request->all(),
-            array_fill_keys($utms, 'required|string|regex:/^[a-zA-Z0-9_\-]+$/')
-        );
+        $commonRules = 'required|string|regex:/^[a-zA-Z0-9 _\-{}]+$/';
+        $utmRules = [
+            'utm_source' => $commonRules,
+            'utm_medium' => $commonRules,
+            'utm_campaign' => $commonRules,
+            'utm_term' => $commonRules,
+            'utm_content' => $commonRules,
+            'gclid' => 'nullable|alpha_dash',
+            'gad_source' => 'nullable|numeric'
+        ];
+
+        $utms = array_keys($utmRules);
+        $requiredUtms = array_diff($utms, ['gclid', 'gad_source']);
+        $validator = Validator::make($request->all(), $utmRules);
 
         if ($validator->fails()) {
             return false;
         }
 
-        return (count($request->only($utms)) === count($request->query()) && $request->has($utms));
+        $requiredParams = count($request->only($requiredUtms)) === count($request->query()) && $request->has($requiredUtms);
+        $allParams = count($request->only($utms)) === count($request->query()) && $request->has($utms);
 
+        return $requiredParams || $allParams;
     }
 
     private function checkMaliciousPatterns(array $patterns, mixed $malice): bool
