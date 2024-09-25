@@ -114,6 +114,8 @@ If you discover any security related issues, please email artisanbarista@mail.ru
 
 -   [ArtisanBarista](https://github.com/artisanbarista)
 -   [Joost van Veen](https://github.com/accentinteractive)
+-   [accentinteractive](https://github.com/accentinteractive)
+-   [webdevartisan](https://github.com/webdevartisan)
 
 ## License
 
