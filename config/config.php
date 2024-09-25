@@ -174,5 +174,5 @@ return [
     |
     */
     'storage_implementation_class' =>
-        env('SHIELD_STORAGE_IMPLEMENTATION_CLASS', '\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter'),
+        env('SHIELD_STORAGE_IMPLEMENTATION_CLASS', '\Artisanbarista\LaravelShield\Services\BlockedIpStoreRateLimiter'),
 ];

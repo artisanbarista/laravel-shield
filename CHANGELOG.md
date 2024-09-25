@@ -6,7 +6,7 @@
 - Forked the project from accentinteractive/laravel-blocker on 2024-02-21.
 
 ### Changed
-- Changed the namespace from `Accentinteractive` to `Webdevartisan`.
+- Changed the namespace from `Accentinteractive` to `Artisanbarista`.
 - Updated the README, composer.json, and License files to reflect the new project details.
 
 ### Removed

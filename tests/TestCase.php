@@ -1,8 +1,8 @@
 <?php
 
-namespace Webdevartisan\LaravelShield\Tests;
+namespace Artisanbarista\LaravelShield\Tests;
 
-use Webdevartisan\LaravelShield\LaravelShieldServiceProvider;
+use Artisanbarista\LaravelShield\LaravelShieldServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

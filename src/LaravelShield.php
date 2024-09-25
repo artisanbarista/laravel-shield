@@ -1,6 +1,6 @@
 <?php
 
-namespace Webdevartisan\LaravelShield;
+namespace Artisanbarista\LaravelShield;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;

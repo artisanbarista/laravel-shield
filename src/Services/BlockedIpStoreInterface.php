@@ -1,6 +1,6 @@
 <?php
 
-namespace Webdevartisan\LaravelShield\Services;
+namespace Artisanbarista\LaravelShield\Services;
 
 interface BlockedIpStoreInterface
 {

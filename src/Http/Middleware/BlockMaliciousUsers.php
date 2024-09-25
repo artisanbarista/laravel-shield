@@ -1,9 +1,9 @@
 <?php
 
-namespace Webdevartisan\LaravelShield\Http\Middleware;
+namespace Artisanbarista\LaravelShield\Http\Middleware;
 
-use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
-use Webdevartisan\LaravelShield\Facades\LaravelShield;
+use Artisanbarista\LaravelShield\Facades\BlockedIpStore;
+use Artisanbarista\LaravelShield\Facades\LaravelShield;
 use Closure;
 
 class BlockMaliciousUsers

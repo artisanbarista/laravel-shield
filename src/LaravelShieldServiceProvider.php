@@ -1,8 +1,8 @@
 <?php
 
-namespace Webdevartisan\LaravelShield;
+namespace Artisanbarista\LaravelShield;
 
-use Webdevartisan\LaravelShield\Services\BlockedIpStoreDatabase;
+use Artisanbarista\LaravelShield\Services\BlockedIpStoreDatabase;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelShieldServiceProvider extends ServiceProvider

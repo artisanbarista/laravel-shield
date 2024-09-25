@@ -12,7 +12,7 @@ Your application is hammered by malicious requests that try out exploit URLs. Th
 Step 1: Install the package via composer:
 
 ```bash
-composer require webdevartisan/laravel-shield
+composer require artisanbarista/laravel-shield
 ```
 
 Step 2: Make sure to register the Middleware.
@@ -22,7 +22,7 @@ To use it on all requests, add it as the first option to the `web` section under
 ```php
 protected $middlewareGroups = [
     'web' => [
-        \Webdevartisan\LaravelShield\Http\Middleware\BlockMaliciousUsers::class,
+        \Artisanbarista\LaravelShield\Http\Middleware\BlockMaliciousUsers::class,
     ],
 ];
 ```
@@ -31,14 +31,14 @@ To use it on specific requests, add it to any group or to the `protected $middle
 
 ```php
 protected $middleware = [
-        \Webdevartisan\LaravelShield\Http\Middleware\BlockMaliciousUsers::class,
+        \Artisanbarista\LaravelShield\Http\Middleware\BlockMaliciousUsers::class,
     ];
 ```
 
 Step 3: Optionally publish the config file with:
 
 ```
-php artisan vendor:publish --provider="Webdevartisan\LaravelShield\LaravelShieldServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Artisanbarista\LaravelShield\LaravelShieldServiceProvider" --tag="config"
 ```
 
 ## Usage
@@ -85,14 +85,14 @@ Example: setting `seznam` will block User Agent 'Mozilla/5.0 (compatible; Seznam
 
 ### Define storage class implementation
 
-By default, blocked IPs are stored in cache, using storage implementation `\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter::class`.
+By default, blocked IPs are stored in cache, using storage implementation `\Artisanbarista\LaravelShield\Services\BlockedIpStoreRateLimiter::class`.
 
 You can create a different storage class you wish to use, and replace it in the config file, or by setting this value in .env:
-- \Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter
+- \Artisanbarista\LaravelShield\Services\BlockedIpStoreRateLimiter
 
 
 ```apacheconf
-SHIELD_STORAGE_IMPLEMENTATION_CLASS='\Webdevartisan\LaravelShield\Services\BlockedIpStoreRateLimiter'
+SHIELD_STORAGE_IMPLEMENTATION_CLASS='\Artisanbarista\LaravelShield\Services\BlockedIpStoreRateLimiter'
 ```
 
 ### Testing
@@ -108,11 +108,11 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ### Security
 
-If you discover any security related issues, please email webdevartisan@mail.ru instead of using the issue tracker.
+If you discover any security related issues, please email artisanbarista@mail.ru instead of using the issue tracker.
 
 ## Credits
 
--   [WebDevArtisan](https://github.com/webdevartisan)
+-   [ArtisanBarista](https://github.com/artisanbarista)
 -   [Joost van Veen](https://github.com/accentinteractive)
 
 ## License

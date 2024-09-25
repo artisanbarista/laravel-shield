@@ -1,6 +1,6 @@
 <?php
 
-namespace Webdevartisan\LaravelShield\Services;
+namespace Artisanbarista\LaravelShield\Services;
 
 use Illuminate\Support\Facades\RateLimiter;
 

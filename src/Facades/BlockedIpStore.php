@@ -1,6 +1,6 @@
 <?php
 
-namespace Webdevartisan\LaravelShield\Facades;
+namespace Artisanbarista\LaravelShield\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

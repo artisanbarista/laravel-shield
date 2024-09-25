@@ -1,11 +1,11 @@
 <?php
 
-namespace Webdevartisan\LaravelShield\Tests\Feature;
+namespace Artisanbarista\LaravelShield\Tests\Feature;
 
-use Webdevartisan\LaravelShield\Facades\BlockedIpStore;
-use Webdevartisan\LaravelShield\Facades\LaravelShield;
-use Webdevartisan\LaravelShield\Http\Middleware\BlockMaliciousUsers;
-use Webdevartisan\LaravelShield\Tests\TestCase;
+use Artisanbarista\LaravelShield\Facades\BlockedIpStore;
+use Artisanbarista\LaravelShield\Facades\LaravelShield;
+use Artisanbarista\LaravelShield\Http\Middleware\BlockMaliciousUsers;
+use Artisanbarista\LaravelShield\Tests\TestCase;
 use Illuminate\Http\Request;
 
 /**

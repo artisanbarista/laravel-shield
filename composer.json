@@ -1,17 +1,17 @@
 {
-    "name": "webdevartisan/laravel-shield",
+    "name": "artisanbarista/laravel-shield",
     "description": "Block bad bots and users that visit certain (exploit) urls for a set amount of time.",
     "keywords": [
-        "webdevartisan",
+        "artisanbarista",
         "laravel-shield"
     ],
-    "homepage": "https://github.com/webdevartisan/laravel-shield",
+    "homepage": "https://github.com/artisanbarista/laravel-shield",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
-            "name": "WebDevArtisan",
-            "email": "webdevartisan@mail.ru",
+            "name": "ArtisanBarista",
+            "email": "artisanbarista@mail.ru",
             "role": "Developer"
         },
         {
@@ -33,13 +33,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webdevartisan\\LaravelShield\\": "src",
-            "Webdevartisan\\LaravelShield\\Database\\Factories\\": "database/factories"
+            "Artisanbarista\\LaravelShield\\": "src",
+            "Artisanbarista\\LaravelShield\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Webdevartisan\\LaravelShield\\Tests\\": "tests"
+            "Artisanbarista\\LaravelShield\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -52,11 +52,11 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Webdevartisan\\LaravelShield\\LaravelShieldServiceProvider"
+                "Artisanbarista\\LaravelShield\\LaravelShieldServiceProvider"
             ],
             "aliases": {
                 "LaravelShield": "LaravelShield",
-                "BlockedIpStore": "Webdevartisan\\LaravelShield\\Facades\\BlockedIpStore"
+                "BlockedIpStore": "Artisanbarista\\LaravelShield\\Facades\\BlockedIpStore"
             }
         }
     }
