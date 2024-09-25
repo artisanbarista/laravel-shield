@@ -106,10 +106,6 @@ XDEBUG_MODE=coverage vendor/bin/phpunit tests --coverage-html code-coverage
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-### Security
-
-If you discover any security related issues, please email artisanbarista@mail.ru instead of using the issue tracker.
-
 ## Credits
 
 -   [ArtisanBarista](https://github.com/artisanbarista)
